@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/fenix-pagtel/gateway-recarga-plano
+  repository: registry.gitlab.com/fenix-pagtel/gateway-sms
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 0.1.0-server
+  tag: "0.1.0-server"
 
 imagePullSecrets:
   - name: gl-cr-auth
@@ -43,7 +43,7 @@ securityContext:
 service:
   type: NodePort
   port: 3000
-  nodePort: 30000
+  nodePort: 30002
 
 ingress:
   enabled: false
