@@ -41,109 +41,109 @@ spec:
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: BASE_URI
             
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_DIALECT
 
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_HOST
 
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: API_MAIL
 
             - name: RABBIT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: RABBIT_HOST
 
             - name: RABBIT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: RABBIT_PORT
 
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: ENCRYPTION_KEY
 
             - name: ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: ENCRYPTION_IV
 
             - name: PAYLOAD_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: PAYLOAD_ENCRYPTION_KEY
 
             - name: PAYLOAD_ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: PAYLOAD_ENCRYPTION_IV
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: DB_PASSWORD
 
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ms-recarga-plano
+                  name: gateway-ativacao
                   key: RABBIT_PASSWORD
                   
           livenessProbe:
