@@ -1,12 +1,10 @@
-image:
-    name: registry.gitlab.com/fenix-pagtel/charts:helm
-    entrypoint: ["/bin/bash", "-c"]
+image: "registry.gitlab.com/fenix-pagtel/charts:helm"
 
 stages:
   - lint
   - deploy
 
-lint:
+check:
   stage: lint
   script:
     - helm lint helm-chart-sources/*
