@@ -21,3 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+config-map.yaml
+secret.yaml

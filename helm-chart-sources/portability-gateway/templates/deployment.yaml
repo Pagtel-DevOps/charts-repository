@@ -38,122 +38,131 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
+            # SERVER
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: BASE_URI
             
+            # DATABASE
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_DIALECT
 
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_HOST
-
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: gateway-portabilidade
-                  key: API_MAIL
-
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: gateway-portabilidade
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: gateway-portabilidade
-                  key: RABBIT_PORT
-
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: gateway-portabilidade
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: gateway-portabilidade
-                  key: ENCRYPTION_IV
-
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: gateway-portabilidade
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: gateway-portabilidade
-                  key: PAYLOAD_ENCRYPTION_IV
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: DB_PASSWORD
+
+            # APIS
+            - name: API_MAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway
+                  key: API_MAIL
+
+            - name: API_AUTHENTICATOR
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway
+                  key: API_AUTHENTICATOR
+
+            # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway
+                  key: RABBIT_PORT
 
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gateway-portabilidade
+                  name: portability-gateway
                   key: RABBIT_PASSWORD
-                  
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway
+                  key: ENCRYPTION_IV
+
+            # PAYLOAD 
+            - name: PAYLOAD_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway
+                  key: PAYLOAD_ENCRYPTION_KEY
+
+            - name: PAYLOAD_ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway
+                  key: PAYLOAD_ENCRYPTION_IV
+
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/v1/health
               port: http
+              
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

@@ -38,122 +38,131 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
+            #SERVER
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: BASE_URI
             
+            # DATABASE
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_DIALECT
 
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_HOST
-
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: API_MAIL
-
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: RABBIT_PORT
-
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: ENCRYPTION_IV
-
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: ms-gerenciamento-conta
-                  key: PAYLOAD_ENCRYPTION_IV
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: DB_PASSWORD
 
-            - name: RABBIT_USER
+            #APIS
+            - name: API_MAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: API_MAIL
+
+             - name: API_DATORA_CONSUMPTION
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: API_DATORA_CONSUMPTION
+
+            # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: RABBIT_PORT
+
+              - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ms-gerenciamento-conta
+                  name: account-management-microservice
                   key: RABBIT_PASSWORD
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: account-management-microservice
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: account-management-microservice
+                  key: ENCRYPTION_IV
+
+            # PAYLOAD
+            - name: PAYLOAD_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: account-management-microservice
+                  key: PAYLOAD_ENCRYPTION_KEY
+
+            - name: PAYLOAD_ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: account-management-microservice
+                  key: PAYLOAD_ENCRYPTION_IV
                   
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/v1/health
               port: http
+              
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

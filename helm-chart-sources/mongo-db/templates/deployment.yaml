@@ -34,20 +34,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: sqlport
+            - name: mongoport
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mongo
+                  name: mongo-db
                   key: MONGO_INITDB_ROOT_USERNAME
 
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongo
+                  name: mongo-db
                   key: MONGO_INITDB_ROOT_PASSWORD
 
           resources:

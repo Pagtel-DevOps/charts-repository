@@ -44,7 +44,7 @@ spec:
             - name: SA_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mssql
+                  name: mssql-db
                   key: SA_PASSWORD
 
           resources:
