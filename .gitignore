@@ -1,2 +1,2 @@
-config-map-*.yaml
-secret-*.yaml
+config-map.yaml
+secret.yaml
