@@ -115,7 +115,7 @@ spec:
                   name: sms-gateway
                   key: RABBIT_PORT
 
-              - name: RABBIT_USER
+            - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
                   name: sms-gateway

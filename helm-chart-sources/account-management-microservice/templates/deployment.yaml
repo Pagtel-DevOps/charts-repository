@@ -101,7 +101,7 @@ spec:
                   name: account-management-microservice
                   key: API_MAIL
 
-             - name: API_DATORA_CONSUMPTION
+            - name: API_DATORA_CONSUMPTION
               valueFrom:
                 configMapKeyRef:
                   name: account-management-microservice
@@ -120,7 +120,7 @@ spec:
                   name: account-management-microservice
                   key: RABBIT_PORT
 
-              - name: RABBIT_USER
+            - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
                   name: account-management-microservice
