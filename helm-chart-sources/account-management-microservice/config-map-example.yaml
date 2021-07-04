@@ -2,16 +2,21 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: activation-gateway
+  name: account-management-microservice
   namespace: staging
 data:
-  API_MAIL: ""
+  # SERVER
+  NODE_ENV: ""
   BASE_URI: ""
+  PORT: ""
+  # DATABASE
   DB_DIALECT: ""
   DB_HOST: ""
   DB_NAME: ""
   DB_PORT: ""
-  NODE_ENV: ""
-  PORT: ""
+  # RABBIT
   RABBIT_HOST: ""
   RABBIT_PORT: ""
+  # APIS
+  API_MAIL: ""
+  API_DATORA_CONSUMPTION: ""

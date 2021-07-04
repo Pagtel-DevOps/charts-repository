@@ -41,109 +41,109 @@ spec:
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: BASE_URI
             
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_DIALECT
 
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_HOST
 
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: API_MAIL
 
             - name: RABBIT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: RABBIT_HOST
 
             - name: RABBIT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: RABBIT_PORT
 
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: ENCRYPTION_KEY
 
             - name: ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: ENCRYPTION_IV
 
             - name: PAYLOAD_ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: PAYLOAD_ENCRYPTION_KEY
 
             - name: PAYLOAD_ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: PAYLOAD_ENCRYPTION_IV
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: DB_PASSWORD
 
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: gateway-ativacao
+                  name: activation-gateway
                   key: RABBIT_PASSWORD
                   
           livenessProbe:

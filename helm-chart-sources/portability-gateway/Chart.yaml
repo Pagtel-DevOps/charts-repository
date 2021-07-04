@@ -1,0 +1,6 @@
+apiVersion: v2
+name: portability-gateway
+description: Helm chart for portability gateway
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
