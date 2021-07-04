@@ -37,6 +37,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+              
           env:
             - name: NODE_ENV
               valueFrom:
@@ -146,14 +147,11 @@ spec:
                   name: gateway-sms
                   key: RABBIT_PASSWORD
                   
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/v1/health
               port: http
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
