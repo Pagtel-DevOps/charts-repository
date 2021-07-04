@@ -1,19 +1,19 @@
-lint Helm Charts:
-  image:
-    name: linkyard/docker-helm
-    entrypoint: ["/bin/sh", "-c"]
-  stage: test
+image:
+    name: registry.gitlab.com/fenix-pagtel/charts:helm
+    entrypoint: ["/bin/bash", "-c"]
+
+stages:
+  - lint
+  - deploy
+
+lint:
+  stage: lint
   script:
     - helm lint helm-chart-sources/*
 
 pages:
-  image:
-    name: linkyard/docker-helm
-    entrypoint: ["/bin/sh", "-c"]
-
   stage: deploy
   script:
-    - helm init --client-only
     - mkdir -p ./public
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
     - helm package helm-chart-sources/* --destination ./public
