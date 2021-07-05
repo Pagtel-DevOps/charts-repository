@@ -16,6 +16,7 @@ pages:
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
     - helm package helm-chart-sources/* --destination ./public
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME} .
+    - mv *.tgz ./public
     - mv index.yaml ./public
   artifacts:
     paths:
