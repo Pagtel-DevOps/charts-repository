@@ -1,0 +1,171 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "autenticador.fullname" . }}-listener
+  labels:
+    {{- include "autenticador.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.listener.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "autenticador.selectorLabels" . | nindent 6 }}-listener
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "autenticador.selectorLabels" . | nindent 8 }}-listener
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "autenticador.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-listener"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+              
+          env:
+            # SERVER
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: NODE_ENV
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: PORT
+
+            - name: BASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: BASE_URI
+            
+            # DATABASE
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: DB_PORT
+
+            - name: DB_DIALECT
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: DB_DIALECT
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: DB_NAME
+
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: DB_HOST
+
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: DB_USERNAME
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: DB_PASSWORD
+
+            # APIS
+            - name: API_MAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: API_MAIL
+
+            - name: API_AUTHENTICATOR
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: API_AUTHENTICATOR
+
+            # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: RABBIT_PORT
+
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: RABBIT_PASSWORD
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: ENCRYPTION_IV
+
+            # PAYLOAD 
+            - name: PAYLOAD_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: PAYLOAD_ENCRYPTION_KEY
+
+            - name: PAYLOAD_ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: activation-gateway
+                  key: PAYLOAD_ENCRYPTION_IV
+                        
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
