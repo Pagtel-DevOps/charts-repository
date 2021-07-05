@@ -24,3 +24,5 @@
 
 config-map.yaml
 secret.yaml
+
+*-example.yaml

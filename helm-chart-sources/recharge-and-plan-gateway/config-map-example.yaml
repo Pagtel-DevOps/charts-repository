@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: recharge-and-plan-gateway
-  namespace: staging
+
 data:
   # SERVER
   NODE_ENV: ""

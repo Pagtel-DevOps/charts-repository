@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: authenticator-microservice
-  namespace: staging
+
 data:
   # SERVER
   NODE_ENV: ""
