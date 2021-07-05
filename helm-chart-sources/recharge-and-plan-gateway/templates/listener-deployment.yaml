@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "autenticador.fullname" . }}
+  name: {{ include "autenticador.fullname" . }}-listener
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}
+    {{- include "autenticador.labels" . | nindent 4 }}-listener
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.listener.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "autenticador.selectorLabels" . | nindent 6 }}
+      {{- include "autenticador.selectorLabels" . | nindent 6 }}-listener
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "autenticador.selectorLabels" . | nindent 8 }}
+        {{- include "autenticador.selectorLabels" . | nindent 8 }}-listener
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -31,12 +31,9 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-listener"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+ 
           env:
             #SERVER
             - name: NODE_ENV
@@ -151,11 +148,6 @@ spec:
                 secretKeyRef:
                   name: recharge-and-plan-gateway
                   key: PAYLOAD_ENCRYPTION_IV
-                  
-          readinessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: http
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
