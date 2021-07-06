@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: node-shared-mongo-volume-claim
+spec:
+  storageClassName: manual
+  selector:
+    matchLabels:
+      system: mongo
+      type: local
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
