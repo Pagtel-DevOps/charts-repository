@@ -1,6 +1,0 @@
-apiVersion: v2
-name: sms-gateway
-description: Helm chart for sms gateway
-type: application
-version: 0.2.0
-appVersion: "0.1.0"

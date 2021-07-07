@@ -1,0 +1,2 @@
+Activation gateway has deployed with success!!!
+Server NodePort: {{ .Values.server.service.nodePort }}

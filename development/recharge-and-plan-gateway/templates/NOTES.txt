@@ -1,0 +1,2 @@
+Recharge and Plan gateway has deployed with success!!!
+Server NodePort: {{ .Values.service.nodePort }}

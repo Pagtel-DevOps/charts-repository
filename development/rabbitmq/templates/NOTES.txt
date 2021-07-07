@@ -1,0 +1,3 @@
+RabbitMQ has deployed with success!!!
+Server NodePort: {{ .Values.server.service.nodePort }}
+Dashboard NodePort: {{ .Values.dashboard.service.nodePort }}
