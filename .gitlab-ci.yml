@@ -1,21 +1,21 @@
-image: "registry.gitlab.com/fenix-pagtel/charts:helm"
+image: "$CI_REGISTRY_IMAGE:helm"
 
 stages:
   - lint
   - deploy
 
-check:
+lint:
   stage: lint
   script:
-    - helm lint helm-chart-sources/*
+    - helm lint development/*
 
 pages:
   stage: deploy
   script:
-    - mkdir -p ./public
+    - mkdir -p ./public/development
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
-    - helm package helm-chart-sources/* --destination ./public
-    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME} ./public
+    - helm package development/* --destination ./public/development
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/development ./public/development
   artifacts:
     paths:
       - public

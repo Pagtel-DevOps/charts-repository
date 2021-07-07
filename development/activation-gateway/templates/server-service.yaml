@@ -5,12 +5,12 @@ metadata:
   labels:
     {{- include "autenticador.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.server.service.type }}
+  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.server.service.port }}
-      targetPort: {{ .Values.server.service.port }}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-      nodePort: {{ .Values.server.service.nodePort }}
+      nodePort: {{ .Values.service.nodePort }}
       
   selector:
     {{- include "autenticador.selectorLabels" . | nindent 4 }}

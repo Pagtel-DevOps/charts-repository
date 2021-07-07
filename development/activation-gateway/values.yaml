@@ -7,10 +7,6 @@ listener:
 
 server:
   replicaCount: 1
-  service:
-    type: NodePort
-    port: 3000
-    nodePort: 30001
 
 image:
   repository: registry.gitlab.com/fenix-pagtel/gateway-ativacao
@@ -47,6 +43,11 @@ securityContext:
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 3000
+  nodePort: 30001
 
 ingress:
   enabled: false
