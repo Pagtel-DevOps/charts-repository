@@ -43,6 +43,7 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          hostname: {{ .Values.hostname }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -60,6 +61,9 @@ spec:
             - name: server
               containerPort: {{ .Values.server.service.port }}
               protocol: TCP
+
+          env:
+             name: 
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
