@@ -20,7 +20,7 @@ spec:
       labels:
         {{- include "autenticador.selectorLabels" . | nindent 8 }}
     spec:
-
+      hostname: {{ .Values.hostname }}
       initContainers:
         - name: volume-permissions
           image: busybox
