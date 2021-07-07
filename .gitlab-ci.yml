@@ -13,6 +13,7 @@ pages:
   stage: deploy
   script:
     - mkdir -p ./public/development
+    - cp -r ./raw ./public/
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
     - helm package development/* --destination ./public/development
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/development ./public/development
