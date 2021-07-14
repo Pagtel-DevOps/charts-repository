@@ -1,2 +1,0 @@
-Account management microservice has deployed with success!!!
-Server NodePort: {{ .Values.service.nodePort }}

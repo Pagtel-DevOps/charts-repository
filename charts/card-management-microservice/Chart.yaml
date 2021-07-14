@@ -1,0 +1,6 @@
+apiVersion: v2
+name: card-management-microservice
+description: Helm chart for Card management microservice
+type: application
+version: 1.0.0
+appVersion: "development"
