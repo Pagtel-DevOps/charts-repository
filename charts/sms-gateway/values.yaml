@@ -9,7 +9,7 @@ server:
   replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/fenix-pagtel/gateway-sms
+  repository: registry.gitlab.com/phoenix-pagtel/gateway-sms
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "development"
