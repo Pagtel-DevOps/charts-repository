@@ -7,16 +7,16 @@ stages:
 lint:
   stage: lint
   script:
-    - helm lint development/*
+    - helm lint templates/*
 
 pages:
   stage: deploy
   script:
-    - mkdir -p ./public/development
+    - mkdir -p ./public/templates
     - cp -r ./raw ./public/
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
-    - helm package development/* --destination ./public/development
-    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/development ./public/development
+    - helm package templates/* --destination ./public/templates
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/templates ./public/templates
   artifacts:
     paths:
       - public
