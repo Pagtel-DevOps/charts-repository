@@ -20,7 +20,6 @@ spec:
       labels:
         {{- include "rabbitmq.selectorLabels" . | nindent 8 }}
     spec:
-      hostname: {{ .Values.hostname }}
       initContainers:
         - name: volume-permissions
           image: busybox
@@ -41,9 +40,9 @@ spec:
       serviceAccountName: {{ include "rabbitmq.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      hostname: {{ .Values.hostname }}
       containers:
         - name: {{ .Chart.Name }}
-          hostname: {{ .Values.hostname }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -61,9 +60,6 @@ spec:
             - name: server
               containerPort: {{ .Values.server.service.port }}
               protocol: TCP
-
-          env:
-             name: 
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
