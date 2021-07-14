@@ -116,6 +116,12 @@ spec:
                   name: authenticator-microservice
                   key: MONGO_DB_NAME
 
+            - name: MONGO_DB_AUTH_SOURCE
+              valueFrom:
+                configMapKeyRef:
+                  name: authenticator-microservice
+                  key: MONGO_DB_AUTH_SOURCE
+
             - name: MONGO_DB_USER
               valueFrom:
                 secretKeyRef:
