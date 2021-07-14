@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "autenticador.fullname" . }}-management
+  name: {{ .Values.dashboard.service.name }}
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}
+    {{- include "rabbitmq.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.dashboard.service.type }}
   ports:
@@ -13,4 +13,4 @@ spec:
       nodePort: {{ .Values.dashboard.service.nodePort }}
       
   selector:
-    {{- include "autenticador.selectorLabels" . | nindent 4 }}
+    {{- include "rabbitmq.selectorLabels" . | nindent 4 }}

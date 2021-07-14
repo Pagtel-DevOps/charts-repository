@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "autenticador.name" -}}
+{{- define "authenticator-microservice.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "autenticador.fullname" -}}
+{{- define "authenticator-microservice.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "autenticador.chart" -}}
+{{- define "authenticator-microservice.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "autenticador.labels" -}}
-helm.sh/chart: {{ include "autenticador.chart" . }}
-{{ include "autenticador.selectorLabels" . }}
+{{- define "authenticator-microservice.labels" -}}
+helm.sh/chart: {{ include "authenticator-microservice.chart" . }}
+{{ include "authenticator-microservice.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "autenticador.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "autenticador.name" . }}
+{{- define "authenticator-microservice.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "authenticator-microservice.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "autenticador.serviceAccountName" -}}
+{{- define "authenticator-microservice.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "autenticador.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "authenticator-microservice.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

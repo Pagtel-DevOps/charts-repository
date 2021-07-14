@@ -40,6 +40,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
+  name: mongodb
   type: NodePort
   port: 27017
   nodePort: 32017

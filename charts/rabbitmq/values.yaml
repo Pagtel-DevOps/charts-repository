@@ -8,12 +8,14 @@ replicaCount: 1
 
 dashboard:
   service:
+    name: rabbitmqdashboard
     type: NodePort
     port: 15672
     nodePort: 30672
 
 server:
   service:
+    name: rabbitmqserver
     type: NodePort
     port: 5672
     nodePort: 31672

@@ -45,6 +45,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
+  name: portabilitygateway
   type: NodePort
   port: 3000
 

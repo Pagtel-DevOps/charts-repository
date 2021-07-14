@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "autenticador.fullname" . }}-server
+  name: {{ .Values.service.name }}
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}
+    {{- include "portability-gateway.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
       protocol: TCP
-      nodePort: {{ .Values.service.nodePort }}
       
   selector:
-    {{- include "autenticador.selectorLabels" . | nindent 4 }}
+    {{- include "portability-gateway.selectorLabels" . | nindent 4 }}

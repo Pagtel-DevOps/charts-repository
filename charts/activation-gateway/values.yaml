@@ -45,6 +45,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
+  name: activationgateway
   type: NodePort
   port: 3000
 

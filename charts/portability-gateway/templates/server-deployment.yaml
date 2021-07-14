@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "autenticador.fullname" . }}-server
+  name: {{ include "portability-gateway.fullname" . }}-server
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}
+    {{- include "portability-gateway.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.server.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "autenticador.selectorLabels" . | nindent 6 }}
+      {{- include "portability-gateway.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "autenticador.selectorLabels" . | nindent 8 }}
+        {{- include "portability-gateway.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "autenticador.serviceAccountName" . }}
+      serviceAccountName: {{ include "portability-gateway.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

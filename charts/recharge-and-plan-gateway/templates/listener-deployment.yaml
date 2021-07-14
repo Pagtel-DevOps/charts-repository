@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "autenticador.fullname" . }}-listener
+  name: {{ include "recharge-and-plan-gateway.fullname" . }}-listener
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}-listener
+    {{- include "recharge-and-plan-gateway.labels" . | nindent 4 }}-listener
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.listener.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "autenticador.selectorLabels" . | nindent 6 }}-listener
+      {{- include "recharge-and-plan-gateway.selectorLabels" . | nindent 6 }}-listener
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "autenticador.selectorLabels" . | nindent 8 }}-listener
+        {{- include "recharge-and-plan-gateway.selectorLabels" . | nindent 8 }}-listener
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "autenticador.serviceAccountName" . }}
+      serviceAccountName: {{ include "recharge-and-plan-gateway.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

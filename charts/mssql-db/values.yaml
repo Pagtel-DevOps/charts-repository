@@ -40,6 +40,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
+  name: mssqldb
   type: NodePort
   port: 1433
   nodePort: 31433

@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "autenticador.fullname" . }}
+  name: {{ include "portability-gateway.fullname" . }}
   labels:
-    {{- include "autenticador.labels" . | nindent 4 }}
+    {{- include "portability-gateway.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "autenticador.fullname" . }}
+    name: {{ include "portability-gateway.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
