@@ -95,19 +95,6 @@ spec:
                   name: card-management-microservice
                   key: DB_PASSWORD
 
-            #APIS
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: card-management-microservice
-                  key: API_MAIL
-
-            - name: API_DATORA_CONSUMPTION
-              valueFrom:
-                configMapKeyRef:
-                  name: card-management-microservice
-                  key: API_DATORA_CONSUMPTION
-
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:

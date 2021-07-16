@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "authenticatorms"
+fullnameOverride: "authenticatorms"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -55,7 +55,10 @@ ingress:
   hosts:
     - host: api.development.pagtel.com
       paths:
-        - path: /phoenix
+        - path: /phoenix/v1/auth
+          pathType: Prefix
+
+        - path: /phoenix/v1/tokens
           pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls

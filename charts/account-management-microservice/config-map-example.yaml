@@ -12,6 +12,7 @@ data:
   DB_DIALECT: ""
   DB_HOST: ""
   DB_NAME: ""
+  DB_RECHARGE_NAME: ""
   DB_PORT: ""
   # RABBIT
   RABBIT_HOST: ""
@@ -19,3 +20,4 @@ data:
   # APIS
   API_MAIL: ""
   API_DATORA_CONSUMPTION: ""
+  API_AUTHENTICATION: ""

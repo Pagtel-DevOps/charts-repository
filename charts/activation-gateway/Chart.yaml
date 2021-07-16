@@ -2,5 +2,5 @@ apiVersion: v2
 name: activation-gateway
 description: Helm chart for activation gateway
 type: application
-version: 2.0.0
+version: 3.0.0
 appVersion: "development"

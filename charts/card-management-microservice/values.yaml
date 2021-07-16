@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "cardmanagementms"
+fullnameOverride: "cardmanagementms"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -42,7 +42,7 @@ securityContext:
 
 service:
   name: cardmanagementms
-  type: ClusterIP
+  type: NodePort
   port: 3000
 
 ingress:
@@ -55,7 +55,7 @@ ingress:
   hosts:
     - host: api.development.pagtel.com
       paths:
-        - path: /phoenix
+        - path: /phoenix/v1/cards
           pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls

@@ -77,6 +77,12 @@ spec:
                   name: account-management-microservice
                   key: DB_NAME
 
+            - name: DB_RECHARGE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: DB_RECHARGE_NAME
+
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -107,6 +113,12 @@ spec:
                 configMapKeyRef:
                   name: account-management-microservice
                   key: API_DATORA_CONSUMPTION
+
+            - name: API_AUTHENTICATION
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-microservice
+                  key: API_AUTHENTICATION
 
             # RABBIT
             - name: RABBIT_HOST
