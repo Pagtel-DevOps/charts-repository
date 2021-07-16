@@ -1,0 +1,2 @@
+Financial transaction gateway has deployed with success!!!
+Port: { .Values.service.nodePort }

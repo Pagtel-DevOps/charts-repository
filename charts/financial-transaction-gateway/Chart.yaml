@@ -1,0 +1,6 @@
+apiVersion: v2
+name: financial-transaction-gateway
+description: Helm chart for financial transaction gateway
+type: application
+version: 3.0.0
+appVersion: "development"
