@@ -1,5 +1,5 @@
 apiVersion: v2
-name: account-management-microservice
+name: account-management-gateway
 description: Helm chart for account management microservice
 type: application
 version: 3.0.0

@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "account-management-microservice.fullname" . }}
+  name: {{ include "account-management-gateway.fullname" . }}
   labels:
-    {{- include "account-management-microservice.labels" . | nindent 4 }}
+    {{- include "account-management-gateway.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "account-management-microservice.fullname" . }}
+    name: {{ include "account-management-gateway.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

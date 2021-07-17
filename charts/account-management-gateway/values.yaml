@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-account-management
+  repository: registry.gitlab.com/phoenix-pagtel/gateway-account-management
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "development"
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "accountmanagementms"
-fullnameOverride: "accountmanagementms"
+nameOverride: "accountmanagementgateway"
+fullnameOverride: "accountmanagementgateway"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: accountmanagementms
+  name: accountmanagementgateway
   type: NodePort
   port: 3000
 
