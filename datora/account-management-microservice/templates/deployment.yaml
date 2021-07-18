@@ -59,12 +59,6 @@ spec:
                   name: datora-account-management-microservice
                   key: DATABASE_PORT
 
-            - name: DATABASE_INSTANCE
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_INSTANCE
-
             - name: DATABASE_NAME
               valueFrom:
                 configMapKeyRef:
@@ -77,11 +71,11 @@ spec:
                   name: datora-account-management-microservice
                   key: DATABASE_HOST
 
-            - name: DATABASE_USERNAME
+            - name: DATABASE_USER
               valueFrom:
                 secretKeyRef:
                   name: datora-account-management-microservice
-                  key: DATABASE_USERNAME
+                  key: DATABASE_USER
 
             - name: DATABASE_PASSWORD
               valueFrom:
