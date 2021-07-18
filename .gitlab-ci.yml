@@ -7,16 +7,26 @@ stages:
 lint:
   stage: lint
   script:
-    - helm lint charts/*
+    - helm lint phoenix/*
+    - helm lint datora/*
+    - helm lint devops/*
 
 pages:
   stage: deploy
   script:
-    - mkdir -p ./public/charts
-    - cp -r ./raw ./public/
+    - mkdir -p ./public/phoenix
+    - mkdir -p ./public/datora
+    - mkdir -p ./public/devops
+
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
-    - helm package charts/* --destination ./public/charts
-    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/charts ./public/charts
+
+    - helm package phoenix/* --destination ./public/phoenix
+    - helm package datora/* --destination ./public/datora
+    - helm package devops/* --destination ./public/devops
+
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/phoenix ./public/phoenix
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/datora ./public/datora
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/devops ./public/devops
   artifacts:
     paths:
       - public
