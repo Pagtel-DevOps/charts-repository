@@ -1,0 +1,148 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "datora-sms-microservice.fullname" . }}
+  labels:
+    {{- include "datora-sms-microservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "datora-sms-microservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "datora-sms-microservice.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "datora-sms-microservice.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            #SERVER
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: NODE_ENV
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: PORT
+
+            #BROKER
+            - name: BROKER_URL_GET_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: BROKER_URL_GET_TOKEN
+
+            - name: BROKER_URL_SEND_SMS
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: BROKER_URL_SEND_SMS
+
+            - name: ACC_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: ACC_ID
+
+            - name: SHORT_CODE
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: SHORT_CODE
+
+            - name: PAGTEL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: PAGTEL_USERNAME
+
+            - name: PAGTEL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: PAGTEL_PASSWORD
+
+            # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: RABBIT_PORT
+
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: RABBIT_PASSWORD
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: ENCRYPTION_IV
+
+          # readinessProbe:
+          #   httpGet:
+          #     path: /datora/v1/health
+          #     port: http
+              
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
