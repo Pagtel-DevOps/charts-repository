@@ -114,6 +114,12 @@ spec:
                   name: account-management-gateway
                   key: API_DATORA_CONSUMPTION
 
+            - name: API_DATORA_ACCOUNT_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-gateway
+                  key: API_DATORA_ACCOUNT_MANAGEMENT
+
             - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
