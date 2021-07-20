@@ -83,6 +83,12 @@ spec:
                   name: account-management-gateway
                   key: DB_RECHARGE_NAME
 
+            - name: DB_PAYMENT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-gateway
+                  key: DB_PAYMENT_NAME
+
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
