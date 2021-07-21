@@ -1,0 +1,6 @@
+apiVersion: v2
+name: datora-portability-microservice
+description: Helm chart for portability microservice
+type: application
+version: 3.0.0
+appVersion: "development"

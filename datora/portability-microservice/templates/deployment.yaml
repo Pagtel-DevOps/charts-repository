@@ -1,0 +1,188 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "datora-portability-microservice.fullname" . }}
+  labels:
+    {{- include "datora-portability-microservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "datora-portability-microservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "datora-portability-microservice.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "datora-portability-microservice.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            #SERVER
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: NODE_ENV
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: PORT
+            
+            # DATABASE
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: DATABASE_PORT
+
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: DATABASE_NAME
+
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: DATABASE_HOST
+
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: DATABASE_USER
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: DATABASE_PASSWORD
+
+            # MONGO
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: MONGO_HOST
+
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: MONGO_PORT
+
+              
+            - name: MONGO_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: MONGO_NAME
+
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: MONGO_USER
+
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: MONGO_PASSWORD
+
+            #URLs
+            - name: URL_PORTAL_ONE
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: URL_PORTAL_ONE
+
+            # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: RABBIT_PORT
+
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: RABBIT_PASSWORD
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: ENCRYPTION_IV
+
+            # SECRETS
+            - name: SUBSCRIPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datora-portability-microservice
+                  key: SUBSCRIPTION_KEY
+
+          # readinessProbe:
+          #   httpGet:
+          #     path: /datora/v1/health
+          #     port: http
+              
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
