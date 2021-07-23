@@ -120,6 +120,13 @@ spec:
                   name: card-management-microservice
                   key: RABBIT_PASSWORD
 
+            #API's
+            - name: API_AUTHENTICATION
+              valueFrom:
+                configMapKeyRef:
+                  name: card-management-microservice
+                  key: API_AUTHENTICATION
+
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
