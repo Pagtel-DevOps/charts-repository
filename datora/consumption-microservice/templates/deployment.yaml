@@ -173,10 +173,10 @@ spec:
                   name: datora-consumption-microservice
                   key: SUBSCRIPTION_KEY
 
-          # readinessProbe:
-          #   httpGet:
-          #     path: /datora/v1/health
-          #     port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
