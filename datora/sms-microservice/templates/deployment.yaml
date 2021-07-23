@@ -89,6 +89,37 @@ spec:
                   name: datora-sms-microservice
                   key: PAGTEL_PASSWORD
 
+            # MONGO
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: MONGO_HOST
+
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: MONGO_PORT
+              
+            - name: MONGO_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-sms-microservice
+                  key: MONGO_NAME
+
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: MONGO_USER
+
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: datora-sms-microservice
+                  key: MONGO_PASSWORD
+
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:
@@ -127,10 +158,10 @@ spec:
                   name: datora-sms-microservice
                   key: ENCRYPTION_IV
 
-          # readinessProbe:
-          #   httpGet:
-          #     path: /datora/v1/health
-          #     port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
