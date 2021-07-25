@@ -129,6 +129,18 @@ spec:
 
             # APIS
 
+            - name: PHOENIX
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: PHOENIX
+
+            - name: ACCOUNT_MANAGER
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: ACCOUNT_MANAGER
+
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
@@ -148,6 +160,12 @@ spec:
                 configMapKeyRef:
                   name: manager-api
                   key: BASE_FILES
+
+            - name: CART_LINK
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: CART_LINK
                   
           readinessProbe:
             httpGet:

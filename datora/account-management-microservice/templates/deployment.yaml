@@ -46,6 +46,12 @@ spec:
                   name: datora-account-management-microservice
                   key: NODE_ENV
 
+            - name: BASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-account-management-microservice
+                  key: BASE_URI
+
             - name: PORT
               valueFrom:
                 configMapKeyRef:
@@ -173,10 +179,10 @@ spec:
                   name: datora-account-management-microservice
                   key: SUBSCRIPTION_KEY
 
-          # readinessProbe:
-          #   httpGet:
-          #     path: /datora/v1/health
-          #     port: http
+          readinessProbe:
+            httpGet:
+              path: /account-management/v1/health
+              port: http
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
