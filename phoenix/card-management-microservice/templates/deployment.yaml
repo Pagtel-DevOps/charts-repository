@@ -95,31 +95,6 @@ spec:
                   name: card-management-microservice
                   key: DB_PASSWORD
 
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: card-management-microservice
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: card-management-microservice
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: card-management-microservice
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: card-management-microservice
-                  key: RABBIT_PASSWORD
-
             #API's
             - name: API_AUTHENTICATION
               valueFrom:
