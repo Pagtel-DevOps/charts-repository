@@ -147,31 +147,6 @@ spec:
                   name: authenticator-microservice
                   key: API_SMS
 
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_PASSWORD
-
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
@@ -184,19 +159,6 @@ spec:
                 secretKeyRef:
                   name: authenticator-microservice
                   key: ENCRYPTION_IV
-
-            # PAYLOAD
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: PAYLOAD_ENCRYPTION_IV
                   
           readinessProbe:
             httpGet:
