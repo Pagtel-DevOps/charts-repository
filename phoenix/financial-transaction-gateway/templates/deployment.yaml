@@ -113,6 +113,24 @@ spec:
                   name: financial-transaction-gateway
                   key: API_AUTHENTICATION
 
+            - name: API_DATORA_BILLET
+              valueFrom:
+                configMapKeyRef:
+                  name: financial-transaction-gateway
+                  key: API_DATORA_BILLET
+
+            - name: API_CARD_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: financial-transaction-gateway
+                  key: API_CARD_MANAGEMENT
+
+            - name: API_DATORA_CREDIT_CARD
+              valueFrom:
+                configMapKeyRef:
+                  name: financial-transaction-gateway
+                  key: API_DATORA_CREDIT_CARD
+
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
