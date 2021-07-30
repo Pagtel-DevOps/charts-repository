@@ -129,17 +129,35 @@ spec:
 
             # APIS
 
-            - name: PHOENIX
+            - name: PHOENIX_RECHARGE
               valueFrom:
                 configMapKeyRef:
                   name: manager-api
-                  key: PHOENIX
+                  key: PHOENIX_RECHARGE
 
             - name: ACCOUNT_MANAGER
               valueFrom:
                 configMapKeyRef:
                   name: manager-api
                   key: ACCOUNT_MANAGER
+
+            - name: PHOENIX_ACTIVATION
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: PHOENIX_ACTIVATION
+
+            - name: PHOENIX_PORTABILITY
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: PHOENIX_PORTABILITY
+
+            - name: PHOENIX_AUTENTICATOR
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: PHOENIX_AUTENTICATOR
 
             # TOKEN
             - name: ENCRYPTION_KEY
