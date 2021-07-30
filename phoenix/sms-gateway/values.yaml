@@ -44,7 +44,7 @@ service:
   name: smsgateway
   type: NodePort
   port: 3000
-  nodePort: 30001
+  nodePort: 30000
 
 ingress:
   enabled: false

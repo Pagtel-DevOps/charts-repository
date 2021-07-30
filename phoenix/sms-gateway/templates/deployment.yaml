@@ -95,13 +95,6 @@ spec:
                   name: sms-gateway
                   key: DB_PASSWORD
 
-            #APIS
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: sms-gateway
-                  key: API_MAIL
-
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:
@@ -139,19 +132,6 @@ spec:
                 secretKeyRef:
                   name: sms-gateway
                   key: ENCRYPTION_IV
-
-            # PAYLOAD
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: sms-gateway
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: sms-gateway
-                  key: PAYLOAD_ENCRYPTION_IV
                   
           readinessProbe:
             httpGet:

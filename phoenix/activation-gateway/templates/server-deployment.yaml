@@ -120,7 +120,6 @@ spec:
                   name: activation-gateway
                   key: API_FINANCIAL_TRANSACTION
 
-
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:
@@ -158,19 +157,6 @@ spec:
                 secretKeyRef:
                   name: activation-gateway
                   key: ENCRYPTION_IV
-
-            # PAYLOAD 
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway
-                  key: PAYLOAD_ENCRYPTION_IV
                   
           readinessProbe:
             httpGet:
