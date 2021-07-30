@@ -139,55 +139,6 @@ spec:
                   name: billet-microservice
                   key: ENCRYPTION_IV
 
-            # ANY
-            - name: BANK_SLIP_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: BANK_SLIP_NAME
-
-            - name: PAGTEL_ADDRESS_CITY
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_CITY
-
-            - name: PAGTEL_ADDRESS_DISTRICT
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_DISTRICT
-
-            - name: PAGTEL_ADDRESS_STREET
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_STREET
-
-            - name: PAGTEL_ADDRESS_STREET_NUMBER
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_STREET_NUMBER
-
-            - name: PAGTEL_ADDRESS_ZIP_CODE
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_ZIP_CODE
-
-            - name: PAGTEL_ADDRESS_STATE
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_STATE
-
-            - name: PAGTEL_ADDRESS_COUNTRY
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PAGTEL_ADDRESS_COUNTRY
-
             # AUTH
             - name: WIRECARD_ACCESS_TOKEN
               valueFrom:

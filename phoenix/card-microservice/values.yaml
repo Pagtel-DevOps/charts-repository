@@ -8,7 +8,7 @@ image:
   repository: registry.gitlab.com/phoenix-pagtel/microservice-card
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "development"
 
 imagePullSecrets:
   - name: gl-cr-auth
@@ -54,9 +54,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: api.development.pagtel.com
-      paths:
-        - path: /phoenix/v1/payments/cards
-          pathType: Exact
+      paths: []
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

@@ -144,6 +144,19 @@ spec:
                   name: financial-transaction-gateway
                   key: ENCRYPTION_IV
 
+            # PAYLOAD
+            - name: ENCRYPTION_PAYLOAD_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: financial-transaction-gateway
+                  key: ENCRYPTION_PAYLOAD_KEY
+
+            - name: ENCRYPTION_PAYLOAD_IV
+              valueFrom:
+                secretKeyRef:
+                  name: financial-transaction-gateway
+                  key: ENCRYPTION_PAYLOAD_IV
+
           readinessProbe:
             httpGet:
               path: /phoenix/v1/health

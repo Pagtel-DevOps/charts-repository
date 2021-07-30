@@ -132,23 +132,23 @@ spec:
                   key: MONGO_DB_PASSWORD
 
             # APIS
-            - name: API_MAIL
+            - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
                   name: portability-gateway
-                  key: API_MAIL
+                  key: API_AUTHENTICATION
 
-            - name: API_SMS
+            - name: API_RECHARGE_AND_PLAN
               valueFrom:
                 configMapKeyRef:
                   name: portability-gateway
-                  key: API_SMS
+                  key: API_RECHARGE_AND_PLAN
 
-            - name: API_AUTHENTICATOR
+            - name: API_FINANCIAL_TRANSACTION
               valueFrom:
                 configMapKeyRef:
                   name: portability-gateway
-                  key: API_AUTHENTICATOR
+                  key: API_FINANCIAL_TRANSACTION
 
             # RABBIT
             - name: RABBIT_HOST
