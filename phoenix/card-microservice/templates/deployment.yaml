@@ -1,0 +1,222 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "card-microservice.fullname" . }}-server
+  labels:
+    {{- include "card-microservice.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "card-microservice.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "card-microservice.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "card-microservice.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            # SERVER
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: NODE_ENV
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PORT
+            
+            # DATABASE
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: DATABASE_PORT
+
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: DATABASE_NAME
+
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: DATABASE_HOST
+
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: DATABASE_USER
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: DATABASE_PASSWORD
+
+            # MONGO
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: MONGO_HOST
+
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: MONGO_PORT
+         
+            - name: MONGO_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: MONGO_NAME
+
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: MONGO_USER
+
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: MONGO_PASSWORD
+
+            # APIS
+            - name: URL_CREATE_CLIENT_WIRECARD
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: URL_CREATE_CLIENT_WIRECARD
+
+            - name: URL_CREATE_ORDER_WIRECARD
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: URL_CREATE_ORDER_WIRECARD
+                  
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: ENCRYPTION_IV
+
+            # ANY
+            - name: BANK_SLIP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: BANK_SLIP_NAME
+
+            - name: PAGTEL_ADDRESS_CITY
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_CITY
+
+            - name: PAGTEL_ADDRESS_DISTRICT
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_DISTRICT
+
+            - name: PAGTEL_ADDRESS_STREET
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_STREET
+
+            - name: PAGTEL_ADDRESS_STREET_NUMBER
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_STREET_NUMBER
+
+            - name: PAGTEL_ADDRESS_ZIP_CODE
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_ZIP_CODE
+
+            - name: PAGTEL_ADDRESS_STATE
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_STATE
+
+            - name: PAGTEL_ADDRESS_COUNTRY
+              valueFrom:
+                configMapKeyRef:
+                  name: card-microservice
+                  key: PAGTEL_ADDRESS_COUNTRY
+
+            # AUTH
+            - name: WIRECARD_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: WIRECARD_ACCESS_TOKEN
+
+            - name: WIRECARD_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: card-microservice
+                  key: WIRECARD_ACCESS_KEY
+
+          # readinessProbe:
+          #   httpGet:
+          #     path: /phoenix/v1/health
+          #     port: http
+              
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -102,11 +102,24 @@ spec:
                   name: activation-gateway
                   key: API_MAIL
 
-            - name: API_AUTHENTICATOR
+            - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
                   name: activation-gateway
-                  key: API_AUTHENTICATOR
+                  key: API_AUTHENTICATION
+
+            - name: API_RECHARGE_AND_PLAN
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: API_RECHARGE_AND_PLAN
+
+            - name: API_FINANCIAL_TRANSACTION
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway
+                  key: API_FINANCIAL_TRANSACTION
+
 
             # RABBIT
             - name: RABBIT_HOST

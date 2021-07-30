@@ -1,0 +1,6 @@
+apiVersion: v2
+name: billet-microservice
+description: Helm chart for financial transaction gateway
+type: application
+version: 3.0.0
+appVersion: "development"
