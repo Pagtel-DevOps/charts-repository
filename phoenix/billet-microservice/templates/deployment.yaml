@@ -58,12 +58,6 @@ spec:
                   name: billet-microservice
                   key: DATABASE_PORT
 
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: DATABASE_NAME
-
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:

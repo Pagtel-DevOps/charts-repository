@@ -59,18 +59,6 @@ spec:
                   name: datora-recharge-microservice
                   key: DATABASE_PORT
 
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-recharge-microservice
-                  key: DATABASE_NAME
-
-            - name: DATABASE_RECHARGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-recharge-microservice
-                  key: DATABASE_RECHARGE_NAME
-
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
@@ -101,7 +89,6 @@ spec:
                 configMapKeyRef:
                   name: datora-recharge-microservice
                   key: MONGO_PORT
-
               
             - name: MONGO_NAME
               valueFrom:
@@ -179,10 +166,10 @@ spec:
                   name: datora-recharge-microservice
                   key: SUBSCRIPTION_KEY
 
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

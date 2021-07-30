@@ -51,6 +51,12 @@ spec:
                 configMapKeyRef:
                   name: datora-activation-microservice
                   key: PORT
+
+            - name: BASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-activation-microservice
+                  key: BASE_URI
             
             # DATABASE
             - name: DATABASE_PORT
@@ -95,7 +101,6 @@ spec:
                 configMapKeyRef:
                   name: datora-activation-microservice
                   key: MONGO_PORT
-
               
             - name: MONGO_NAME
               valueFrom:
@@ -133,6 +138,12 @@ spec:
                 configMapKeyRef:
                   name: datora-activation-microservice
                   key: URL_ACCOUNT_MANAGEMENT
+
+            - name: APN
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-activation-microservice
+                  key: APN
 
             # RABBIT
             - name: RABBIT_HOST

@@ -73,6 +73,18 @@ spec:
                   name: recharge-and-plan-gateway
                   key: DB_NAME
 
+            - name: DB_RECHARGE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway
+                  key: DB_RECHARGE_NAME
+            
+            - name: DB_PAYMENT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway
+                  key: DB_PAYMENT_NAME
+
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -97,6 +109,25 @@ spec:
                 configMapKeyRef:
                   name: recharge-and-plan-gateway
                   key: API_MAIL
+
+            - name: API_FINANCIAL_TRANSACTION
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway
+                  key: API_FINANCIAL_TRANSACTION
+
+            - name: API_CARD_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway
+                  key: API_CARD_MANAGEMENT
+
+            - name: API_AUTHENTICATION
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway
+                  key: API_AUTHENTICATION
+
 
             # RABBIT
             - name: RABBIT_HOST
