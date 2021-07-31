@@ -98,37 +98,37 @@ spec:
             - name: MONGO_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_HOST
 
             - name: MONGO_DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_PORT
               
             - name: MONGO_DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_NAME
 
             - name: MONGO_DB_AUTH_SOURCE
               valueFrom:
                 configMapKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_AUTH_SOURCE
 
             - name: MONGO_DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_USER
 
             - name: MONGO_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: authenticator-microservice
+                  name: portability-gateway
                   key: MONGO_DB_PASSWORD
 
             # APIS
