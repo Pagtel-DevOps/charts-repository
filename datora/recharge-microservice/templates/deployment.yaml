@@ -65,6 +65,18 @@ spec:
                   name: datora-recharge-microservice
                   key: DATABASE_HOST
 
+            - name: DATABASE_RECHARGE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-recharge-microservice
+                  key: DATABASE_RECHARGE_NAME
+
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-recharge-microservice
+                  key: DATABASE_NAME
+
             - name: DATABASE_USER
               valueFrom:
                 secretKeyRef:
