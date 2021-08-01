@@ -53,11 +53,11 @@ spec:
                   key: PORT
 
             #BROKER
-            - name: BROKER_URL_GET_TOKEN
+            - name: BROKER_URL
               valueFrom:
                 configMapKeyRef:
                   name: datora-sms-microservice
-                  key: BROKER_URL_GET_TOKEN
+                  key: BROKER_URL
 
             - name: BROKER_URL_SEND_SMS
               valueFrom:
