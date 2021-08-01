@@ -159,6 +159,12 @@ spec:
                   name: manager-api
                   key: PHOENIX_AUTHENTICATOR
 
+            - name: PHOENIX_SMS
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: PHOENIX_SMS
+
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:

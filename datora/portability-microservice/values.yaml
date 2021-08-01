@@ -9,8 +9,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "datorasmsmicroservice"
-fullnameOverride: "datorasmsmicroservice"
+nameOverride: "datoraportabilitymicroservice"
+fullnameOverride: "datoraportabilitymicroservice"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -37,7 +37,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: datorasmsmicroservice
+  name: datoraportabilitymicroservice
   type: NodePort
   port: 3000
 

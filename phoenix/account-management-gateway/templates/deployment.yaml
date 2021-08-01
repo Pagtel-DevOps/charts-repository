@@ -77,6 +77,12 @@ spec:
                   name: account-management-gateway
                   key: DB_NAME
 
+            - name: DB_PORTABILITY_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-gateway
+                  key: DB_PORTABILITY_NAME
+
             - name: DB_RECHARGE_NAME
               valueFrom:
                 configMapKeyRef:

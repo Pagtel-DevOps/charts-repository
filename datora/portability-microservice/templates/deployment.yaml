@@ -51,6 +51,12 @@ spec:
                 configMapKeyRef:
                   name: datora-portability-microservice
                   key: PORT
+
+            - name: BASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: BASE_URI
             
             # DATABASE
             - name: DATABASE_PORT
@@ -58,12 +64,6 @@ spec:
                 configMapKeyRef:
                   name: datora-portability-microservice
                   key: DATABASE_PORT
-
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-portability-microservice
-                  key: DATABASE_NAME
 
             - name: DATABASE_HOST
               valueFrom:
@@ -121,6 +121,18 @@ spec:
                 configMapKeyRef:
                   name: datora-portability-microservice
                   key: URL_PORTAL_ONE
+
+            - name: URL_AUTHENTICATOR
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: URL_AUTHENTICATOR
+
+            - name: URL_ACCOUNT_MANAGER
+              valueFrom:
+                configMapKeyRef:
+                  name: datora-portability-microservice
+                  key: URL_ACCOUNT_MANAGER
 
             # RABBIT
             - name: RABBIT_HOST

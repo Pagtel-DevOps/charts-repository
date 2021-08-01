@@ -60,6 +60,10 @@ ingress:
 
         - path: /phoenix/v1/tokens
           pathType: Prefix
+
+        - path: /phoenix/v1/login
+          pathType: Prefix
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
