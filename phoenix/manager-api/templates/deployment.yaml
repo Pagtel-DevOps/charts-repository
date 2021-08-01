@@ -153,11 +153,11 @@ spec:
                   name: manager-api
                   key: PHOENIX_PORTABILITY
 
-            - name: PHOENIX_AUTENTICATOR
+            - name: PHOENIX_AUTHENTICATOR
               valueFrom:
                 configMapKeyRef:
                   name: manager-api
-                  key: PHOENIX_AUTENTICATOR
+                  key: PHOENIX_AUTHENTICATOR
 
             # TOKEN
             - name: ENCRYPTION_KEY
