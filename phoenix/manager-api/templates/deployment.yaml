@@ -96,6 +96,31 @@ spec:
                   name: manager-api
                   key: DATABASE_PASSWORD
 
+             # RABBIT
+            - name: RABBIT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: RABBIT_HOST
+
+            - name: RABBIT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: manager-api
+                  key: RABBIT_PORT
+
+            - name: RABBIT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: manager-api
+                  key: RABBIT_USER
+
+            - name: RABBIT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: manager-api
+                  key: RABBIT_PASSWORD
+
             # MONGO
             - name: MONGO_HOST
               valueFrom:
@@ -128,7 +153,6 @@ spec:
                   key: MONGO_PASSWORD
 
             # APIS
-
             - name: PHOENIX_RECHARGE
               valueFrom:
                 configMapKeyRef:
