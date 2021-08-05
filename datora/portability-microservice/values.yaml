@@ -42,7 +42,7 @@ service:
   port: 3000
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations:
     {}
@@ -51,13 +51,7 @@ ingress:
   hosts:
     - host: homologation.pagtel.com.br
       paths:
-        - path: /phoenix/v1/auth
-          pathType: Prefix
-
-        - path: /phoenix/v1/tokens
-          pathType: Prefix
-
-        - path: /phoenix/v1/login
+        - path: /datora/v1/events
           pathType: Prefix
 
   tls: []
