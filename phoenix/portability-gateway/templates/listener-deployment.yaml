@@ -67,12 +67,6 @@ spec:
                   name: portability-gateway
                   key: DB_DIALECT
 
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway
-                  key: DB_NAME
-
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
