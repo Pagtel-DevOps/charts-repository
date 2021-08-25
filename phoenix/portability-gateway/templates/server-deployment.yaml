@@ -132,6 +132,12 @@ spec:
                   key: MONGO_DB_PASSWORD
 
             # APIS
+            - name: API_DATORA_PORTABILITY
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway
+                  key: API_DATORA_PORTABILITY
+
             - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
