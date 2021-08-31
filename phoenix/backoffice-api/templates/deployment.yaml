@@ -1,0 +1,167 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "backoffice-api.fullname" . }}
+  labels:
+    {{- include "backoffice-api.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "backoffice-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "backoffice-api.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "backoffice-api.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+
+          env:
+            # SERVER
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: NODE_ENV
+
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PORT
+
+            - name: BASE_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: BASE_URI
+            
+            # DATABASE
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_PORT
+
+            - name: DATABASE_DIALECT
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_DIALECT
+
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_NAME
+
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_HOST
+
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_USER
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backoffice-api
+                  key: DATABASE_PASSWORD
+
+            # APIS
+            - name: PHOENIX_RECHARGE
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PHOENIX_RECHARGE
+
+            - name: ACCOUNT_MANAGER
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: ACCOUNT_MANAGER
+
+            - name: PHOENIX_ACTIVATION
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PHOENIX_ACTIVATION
+
+            - name: PHOENIX_PORTABILITY
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PHOENIX_PORTABILITY
+
+            - name: PHOENIX_AUTHENTICATOR
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PHOENIX_AUTHENTICATOR
+
+            - name: PHOENIX_SMS
+              valueFrom:
+                configMapKeyRef:
+                  name: backoffice-api
+                  key: PHOENIX_SMS
+
+            # TOKEN
+            - name: ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backoffice-api
+                  key: ENCRYPTION_KEY
+
+            - name: ENCRYPTION_IV
+              valueFrom:
+                secretKeyRef:
+                  name: backoffice-api
+                  key: ENCRYPTION_IV
+                  
+          readinessProbe:
+            httpGet:
+              path: /backoffice/v1/health
+              port: http
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
