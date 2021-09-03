@@ -116,10 +116,10 @@ spec:
                   name: dashboard-api
                   key: ENCRYPTION_IV
                   
-          readinessProbe:
-            httpGet:
-              path: /dashboard/v1/health
-              port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /dashboard/v1/health
+          #     port: http
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
