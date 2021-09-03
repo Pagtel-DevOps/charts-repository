@@ -60,41 +60,41 @@ spec:
                   key: BASE_URI
             
             # DATABASE
-            - name: DATABASE_PORT
+            - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
                   name: dashboard-api
-                  key: DATABASE_PORT
+                  key: DB_PORT
 
-            - name: DATABASE_DIALECT
+            - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
                   name: dashboard-api
-                  key: DATABASE_DIALECT
+                  key: DB_DIALECT
 
-            - name: DATABASE_NAME
+            - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: dashboard-api
-                  key: DATABASE_NAME
+                  key: DB_NAME
 
-            - name: DATABASE_HOST
+            - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
                   name: dashboard-api
-                  key: DATABASE_HOST
+                  key: DB_HOST
 
-            - name: DATABASE_USER
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: dashboard-api
-                  key: DATABASE_USER
+                  key: DB_USER
 
-            - name: DATABASE_PASSWORD
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: dashboard-api
-                  key: DATABASE_PASSWORD
+                  key: DB_PASSWORD
 
             # APIS
             - name: API_PHOENIX_AUTHENTICATION
