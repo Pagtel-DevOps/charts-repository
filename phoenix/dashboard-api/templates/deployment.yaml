@@ -118,7 +118,7 @@ spec:
                   
           readinessProbe:
             httpGet:
-              path: /backoffice/v1/health
+              path: /dashboard/v1/health
               port: http
 
           resources:
