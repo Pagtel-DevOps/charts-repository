@@ -84,11 +84,11 @@ spec:
                   name: dashboard-api
                   key: DB_HOST
 
-            - name: DB_USER
+            - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: dashboard-api
-                  key: DB_USER
+                  key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
