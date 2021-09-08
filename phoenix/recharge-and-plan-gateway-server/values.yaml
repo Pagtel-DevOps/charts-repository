@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "rechargeandplangatewayserver"
-fullnameOverride: "rechargeandplangatewayserver"
+nameOverride: "rechargeandplangateway"
+fullnameOverride: "rechargeandplangateway"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: rechargeandplangatewayserver
+  name: rechargeandplangateway
   type: NodePort
   port: 3000
 
