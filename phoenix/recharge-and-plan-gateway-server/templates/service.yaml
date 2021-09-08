@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.service.name }}
   labels:
-    {{- include "recharge-and-plan-gateway.labels" . | nindent 4 }}
+    {{- include "recharge-and-plan-gateway-server.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       
   selector:
-    {{- include "recharge-and-plan-gateway.selectorLabels" . | nindent 4 }}
+    {{- include "recharge-and-plan-gateway-server.selectorLabels" . | nindent 4 }}

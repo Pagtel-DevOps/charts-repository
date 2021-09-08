@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "recharge-and-plan-gateway.fullname" . }}
+  name: {{ include "recharge-and-plan-gateway-listener.fullname" . }}
   labels:
-    {{- include "recharge-and-plan-gateway.labels" . | nindent 4 }}
+    {{- include "recharge-and-plan-gateway-listener.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "recharge-and-plan-gateway.fullname" . }}
+    name: {{ include "recharge-and-plan-gateway-listener.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

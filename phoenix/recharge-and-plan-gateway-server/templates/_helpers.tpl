@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "recharge-and-plan-gateway.name" -}}
+{{- define "recharge-and-plan-gateway-server.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "recharge-and-plan-gateway.fullname" -}}
+{{- define "recharge-and-plan-gateway-server.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "recharge-and-plan-gateway.chart" -}}
+{{- define "recharge-and-plan-gateway-server.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "recharge-and-plan-gateway.labels" -}}
-helm.sh/chart: {{ include "recharge-and-plan-gateway.chart" . }}
-{{ include "recharge-and-plan-gateway.selectorLabels" . }}
+{{- define "recharge-and-plan-gateway-server.labels" -}}
+helm.sh/chart: {{ include "recharge-and-plan-gateway-server.chart" . }}
+{{ include "recharge-and-plan-gateway-server.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "recharge-and-plan-gateway.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "recharge-and-plan-gateway.name" . }}
+{{- define "recharge-and-plan-gateway-server.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "recharge-and-plan-gateway-server.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "recharge-and-plan-gateway.serviceAccountName" -}}
+{{- define "recharge-and-plan-gateway-server.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "recharge-and-plan-gateway.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "recharge-and-plan-gateway-server.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
