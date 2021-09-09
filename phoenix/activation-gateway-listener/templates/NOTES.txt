@@ -1,0 +1,1 @@
+Activation gateway listener has deployed with success!!!

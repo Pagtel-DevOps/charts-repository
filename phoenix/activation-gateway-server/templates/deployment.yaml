@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "activation-gateway.fullname" . }}-server
+  name: {{ include "activation-gateway-server.fullname" . }}
   labels:
-    {{- include "activation-gateway.labels" . | nindent 4 }}
+    {{- include "activation-gateway-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.server.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "activation-gateway.selectorLabels" . | nindent 6 }}
+      {{- include "activation-gateway-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,20 +18,20 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "activation-gateway.selectorLabels" . | nindent 8 }}
+        {{- include "activation-gateway-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "activation-gateway.serviceAccountName" . }}
+      serviceAccountName: {{ include "activation-gateway-server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-server"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           
           ports:
@@ -43,119 +43,119 @@ spec:
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: BASE_URI
             
             # DATABASE
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_DIALECT
 
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_HOST
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: DB_PASSWORD
 
             # APIS
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: API_MAIL
 
             - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: API_AUTHENTICATION
 
             - name: API_RECHARGE_AND_PLAN
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: API_RECHARGE_AND_PLAN
 
             - name: API_FINANCIAL_TRANSACTION
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: API_FINANCIAL_TRANSACTION
 
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: RABBIT_HOST
 
             - name: RABBIT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: RABBIT_PORT
 
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: RABBIT_PASSWORD
 
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: ENCRYPTION_KEY
 
             - name: ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway
+                  name: activation-gateway-server
                   key: ENCRYPTION_IV
                   
           readinessProbe:
