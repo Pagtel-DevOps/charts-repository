@@ -2,5 +2,5 @@ apiVersion: v2
 name: card-management-microservice
 description: Helm chart for Card management microservice
 type: application
-version: 3.0.0
-appVersion: "development"
+version: 4.0.0
+appVersion: "0.0.0"
