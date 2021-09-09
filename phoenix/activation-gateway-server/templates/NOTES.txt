@@ -1,0 +1,1 @@
+Activation gateway server has deployed with success!!!
