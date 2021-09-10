@@ -107,6 +107,12 @@ spec:
                   key: DB_PASSWORD
 
             #APIS
+            - name: API_ACCOUNT_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: recharge-and-plan-gateway-server
+                  key: API_ACCOUNT_MANAGEMENT
+
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:
