@@ -57,6 +57,9 @@ ingress:
       paths:
         - path: /phoenix/v1/activations
           pathType: Prefix
+
+        - path: /phoenix/v1/area-codes
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
