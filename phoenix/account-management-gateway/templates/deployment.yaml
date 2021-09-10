@@ -114,6 +114,12 @@ spec:
                   key: DB_PASSWORD
 
             #APIS
+            - name: API_CARD_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: account-management-gateway
+                  key: API_CARD_MANAGEMENT
+                  
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:
