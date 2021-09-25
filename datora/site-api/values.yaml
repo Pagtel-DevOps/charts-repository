@@ -1,0 +1,115 @@
+# Default values for autenticador.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: registry.gitlab.com/datora/site/api
+  pullPolicy: Always
+  tag: ""
+
+imagePullSecrets:
+  - name: gl-cr-auth
+
+nameOverride: "datora-site-api"
+fullnameOverride: "datora-site-api"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 3000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+configs:
+  - name: NODE_ENV
+    refName: datora-site-api
+
+  - name: PORT
+    refName: datora-site-api
+
+  - name: DB_TYPE
+    refName: datora-site-api
+
+  - name: DB_HOST
+    refName: datora-site-api
+
+  - name: DB_PORT
+    refName: datora-site-api
+
+  - name: DB_NAME
+    refName: datora-site-api
+
+  - name: TYPEORM_MIGRATION
+    refName: datora-site-api
+
+  - name: TYPEORM_MIGRATIONS_DIR
+    refName: datora-site-api
+
+  - name: TYPEORM_ENTITIES
+    refName: datora-site-api
+
+secrets:
+  - name: DB_USER
+    refName: datora-site-api
+
+  - name: DB_PASSWORD
+    refName: datora-site-api
+
+readinessCheck:
+  enabled: false
+  path: /health
+  port: http
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
