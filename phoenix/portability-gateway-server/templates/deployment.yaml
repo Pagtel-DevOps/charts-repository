@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "recharge-and-plan-gateway-server.fullname" . }}
+  name: {{ include "portability-gateway-server.fullname" . }}
   labels:
-    {{- include "recharge-and-plan-gateway-server.labels" . | nindent 4 }}
+    {{- include "portability-gateway-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "recharge-and-plan-gateway-server.selectorLabels" . | nindent 6 }}
+      {{- include "portability-gateway-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "recharge-and-plan-gateway-server.selectorLabels" . | nindent 8 }}
+        {{- include "portability-gateway-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "recharge-and-plan-gateway-server.serviceAccountName" . }}
+      serviceAccountName: {{ include "portability-gateway-server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,162 +38,173 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            #SERVER
+            # SERVER
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: NODE_ENV
 
             - name: PORT
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: PORT
 
             - name: BASE_URI
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: BASE_URI
             
             # DATABASE
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: DB_PORT
 
             - name: DB_DIALECT
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_NAME
-
-            - name: DB_RECHARGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_RECHARGE_NAME
-            
-            - name: DB_PAYMENT_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_PAYMENT_NAME
 
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: DB_HOST
 
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: DB_USERNAME
 
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: DB_PASSWORD
 
-            #APIS
-            - name: API_ACCOUNT_MANAGEMENT
+             # MONGO
+            - name: MONGO_DB_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_ACCOUNT_MANAGEMENT
+                  name: portability-gateway-server
+                  key: MONGO_DB_HOST
 
-            - name: API_MAIL
+            - name: MONGO_DB_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_MAIL
+                  name: portability-gateway-server
+                  key: MONGO_DB_PORT
+              
+            - name: MONGO_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway-server
+                  key: MONGO_DB_NAME
 
-            - name: API_FINANCIAL_TRANSACTION
+            - name: MONGO_DB_AUTH_SOURCE
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_FINANCIAL_TRANSACTION
+                  name: portability-gateway-server
+                  key: MONGO_DB_AUTH_SOURCE
 
-            - name: API_CARD_MANAGEMENT
+            - name: MONGO_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway-server
+                  key: MONGO_DB_USER
+
+            - name: MONGO_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: portability-gateway-server
+                  key: MONGO_DB_PASSWORD
+
+            # APIS
+            - name: API_SHORT_URL
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_CARD_MANAGEMENT
+                  name: portability-gateway-server
+                  key: API_SHORT_URL
+
+            - name: API_DATORA_PORTABILITY
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway-server
+                  key: API_DATORA_PORTABILITY
 
             - name: API_AUTHENTICATION
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: API_AUTHENTICATION
 
+            - name: API_RECHARGE_AND_PLAN
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway-server
+                  key: API_RECHARGE_AND_PLAN
+
+            - name: API_FINANCIAL_TRANSACTION
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway-server
+                  key: API_FINANCIAL_TRANSACTION
+
+            - name: API_SMS
+              valueFrom:
+                configMapKeyRef:
+                  name: portability-gateway-server
+                  key: API_SMS
 
             # RABBIT
             - name: RABBIT_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: RABBIT_HOST
 
             - name: RABBIT_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: RABBIT_PORT
 
             - name: RABBIT_USER
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: RABBIT_USER
 
             - name: RABBIT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: RABBIT_PASSWORD
 
             # TOKEN
             - name: ENCRYPTION_KEY
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: ENCRYPTION_KEY
 
             - name: ENCRYPTION_IV
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
+                  name: portability-gateway-server
                   key: ENCRYPTION_IV
 
-            # PAYLOAD
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: PAYLOAD_ENCRYPTION_IV
-                  
           readinessProbe:
             httpGet:
               path: /phoenix/v1/health
               port: http
-
+              
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

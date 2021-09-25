@@ -96,6 +96,12 @@ spec:
                   key: DB_PASSWORD
 
             # APIS
+            - name: API_DATORA_ACCOUNT_MANAGEMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: activation-gateway-server
+                  key: API_DATORA_ACCOUNT_MANAGEMENT
+            
             - name: API_MAIL
               valueFrom:
                 configMapKeyRef:

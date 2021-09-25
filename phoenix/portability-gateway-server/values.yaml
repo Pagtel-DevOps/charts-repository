@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/gateway-activation
+  repository: registry.gitlab.com/phoenix-pagtel/gateway-portability
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "activationgateway"
-fullnameOverride: "activationgateway"
+nameOverride: "portabilitygateway"
+fullnameOverride: "portabilitygateway"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: activationgateway
+  name: portabilitygateway
   type: NodePort
   port: 3000
 
@@ -55,10 +55,7 @@ ingress:
   hosts:
     - host: homologation.pagtel.com.br
       paths:
-        - path: /phoenix/v1/activations
-          pathType: Prefix
-
-        - path: /phoenix/v1/area-codes
+        - path: /phoenix/v1/portabilities
           pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
