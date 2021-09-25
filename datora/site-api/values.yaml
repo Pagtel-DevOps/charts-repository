@@ -12,8 +12,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "datora-site-api"
-fullnameOverride: "datora-site-api"
+nameOverride: "datorasiteapi"
+fullnameOverride: "datorasiteapi"
 
 serviceAccount:
   # Specifies whether a service account should be created
