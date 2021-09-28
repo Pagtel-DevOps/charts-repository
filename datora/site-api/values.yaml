@@ -53,10 +53,8 @@ ingress:
 configs: []
 secrets: []
 
-readinessCheck:
-  enabled: false
-  path: /health
-  port: http
+readinessCheck: {}
+livenessCheck: {}
 
 resources:
   {}
