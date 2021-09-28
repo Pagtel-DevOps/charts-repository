@@ -37,162 +37,30 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+              
           env:
-            #SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_NAME
-
-            - name: DB_RECHARGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_RECHARGE_NAME
-            
-            - name: DB_PAYMENT_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_PAYMENT_NAME
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_HOST
-
-            - name: DB_USERNAME
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_USERNAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: DB_PASSWORD
-
-            #APIS
-            - name: API_ACCOUNT_MANAGEMENT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_ACCOUNT_MANAGEMENT
-
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_MAIL
-
-            - name: API_FINANCIAL_TRANSACTION
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_FINANCIAL_TRANSACTION
-
-            - name: API_CARD_MANAGEMENT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_CARD_MANAGEMENT
-
-            - name: API_AUTHENTICATION
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: API_AUTHENTICATION
-
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: ENCRYPTION_IV
-
-            # PAYLOAD
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-server
-                  key: PAYLOAD_ENCRYPTION_IV
-                  
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /phoenix/v1/health
-              port: http
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

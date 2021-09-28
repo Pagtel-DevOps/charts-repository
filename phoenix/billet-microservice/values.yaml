@@ -48,19 +48,17 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: api.development.pagtel.com
-      paths:
-        - path: /phoenix/v1/payments/cards
-          pathType: Exact
+  annotations: {}
+  hosts: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+
+configs: []
+secrets: []
+
+readinessCheck:
+  enabled: false
+  path: /health
+  port: http
 
 resources:
   {}

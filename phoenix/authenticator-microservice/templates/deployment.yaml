@@ -40,155 +40,28 @@ spec:
               protocol: TCP
 
           env:
-            # SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: authenticator-microservice
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: DB_NAME
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: DB_HOST
-
-            - name: DB_USERNAME
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: authenticator-microservice
-                  key: DB_USERNAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: DB_PASSWORD
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: RABBIT_PASSWORD
-
-            # MONGO
-            - name: MONGO_DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_HOST
-
-            - name: MONGO_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_PORT
-
-              
-            - name: MONGO_DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_NAME
-
-            - name: MONGO_DB_AUTH_SOURCE
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_AUTH_SOURCE
-
-            - name: MONGO_DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_USER
-
-            - name: MONGO_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: MONGO_DB_PASSWORD
-
-            # APIS
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: API_MAIL
-            
-            - name: API_SMS
-              valueFrom:
-                configMapKeyRef:
-                  name: authenticator-microservice
-                  key: API_SMS
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: authenticator-microservice
-                  key: ENCRYPTION_IV
-                  
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /phoenix/v1/health
-              port: http
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

@@ -37,173 +37,30 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          env:
-            # SERVER
-            - name: NODE_ENV
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: NODE_ENV
-
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: DB_DIALECT
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: DB_HOST
-
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: DB_USERNAME
-
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: DB_PASSWORD
-
-             # MONGO
-            - name: MONGO_DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_HOST
-
-            - name: MONGO_DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_PORT
               
-            - name: MONGO_DB_NAME
+          env:
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_NAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: MONGO_DB_AUTH_SOURCE
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_AUTH_SOURCE
-
-            - name: MONGO_DB_USER
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_USER
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: MONGO_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: MONGO_DB_PASSWORD
-
-            # APIS
-            - name: API_SHORT_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_SHORT_URL
-
-            - name: API_DATORA_PORTABILITY
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_DATORA_PORTABILITY
-
-            - name: API_AUTHENTICATION
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_AUTHENTICATION
-
-            - name: API_RECHARGE_AND_PLAN
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_RECHARGE_AND_PLAN
-
-            - name: API_FINANCIAL_TRANSACTION
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_FINANCIAL_TRANSACTION
-
-            - name: API_SMS
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: API_SMS
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: portability-gateway-server
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: portability-gateway-server
-                  key: ENCRYPTION_IV
-
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /phoenix/v1/health
-              port: http
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

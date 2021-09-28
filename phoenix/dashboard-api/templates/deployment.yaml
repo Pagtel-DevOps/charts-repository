@@ -40,87 +40,29 @@ spec:
               protocol: TCP
 
           env:
-            # SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: dashboard-api
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: DB_NAME
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: DB_HOST
-
-            - name: DB_USERNAME
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: dashboard-api
-                  key: DB_USERNAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: dashboard-api
-                  key: DB_PASSWORD
-
-            # APIS
-            - name: API_PHOENIX_AUTHENTICATION
-              valueFrom:
-                configMapKeyRef:
-                  name: dashboard-api
-                  key: API_PHOENIX_AUTHENTICATION
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: dashboard-api
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: dashboard-api
-                  key: ENCRYPTION_IV
-                  
-          # readinessProbe:
-          #   httpGet:
-          #     path: /dashboard/v1/health
-          #     port: http
-
+          {{- if .Values.readinessCheck.enabled -}}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
+          
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "card-management-microservice.fullname" . }}
+  name: {{ include "portability-gateway.fullname" . }}-listener
   labels:
-    {{- include "card-management-microservice.labels" . | nindent 4 }}
+    {{- include "portability-gateway.labels" . | nindent 4 }}-listener
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.listener.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "card-management-microservice.selectorLabels" . | nindent 6 }}
+      {{- include "portability-gateway.selectorLabels" . | nindent 6 }}-listener
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,27 +18,22 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "card-management-microservice.selectorLabels" . | nindent 8 }}
+        {{- include "portability-gateway.selectorLabels" . | nindent 8 }}-listener
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "card-management-microservice.serviceAccountName" . }}
+      serviceAccountName: {{ include "portability-gateway.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}-listener"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          
-          ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
-              
+
           env:
             {{- range .Values.configs }}
             - name: {{ .name | quote }}
@@ -55,13 +50,6 @@ spec:
                   name: {{ .refName | quote }}
                   key: {{ .name | quote }}
             {{- end }}
-
-          {{- if .Values.readinessCheck.enabled -}}
-          readinessProbe:
-            httpGet:
-              path: {{ .Values.readinessCheck.path | quote }}
-              port: {{ .Values.readinessCheck.port | quote }}
-          {{- end }}
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

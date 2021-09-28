@@ -39,151 +39,29 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            #SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: BASE_URI
-
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: PORT
-            
-            # DATABASE
-            - name: DATABASE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_PORT
-
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_NAME
-
-            - name: DATABASE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_HOST
-
-            - name: DATABASE_USER
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_USER
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: DATABASE_PASSWORD
-
-            # MONGO
-            - name: MONGO_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: MONGO_HOST
-
-            - name: MONGO_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: MONGO_PORT
-
-              
-            - name: MONGO_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: MONGO_NAME
-
-            - name: MONGO_USER
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: MONGO_USER
-
-            - name: MONGO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: MONGO_PASSWORD
-
-            #URLs
-            - name: URL_PORTA
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: URL_PORTA
-
-            - name: URL_HRL
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: URL_HRL
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-account-management-microservice
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: ENCRYPTION_IV
-
-            # SECRETS
-            - name: SUBSCRIPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: datora-account-management-microservice
-                  key: SUBSCRIPTION_KEY
-
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /account-management/v1/health
-              port: http
-              
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
+                        
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

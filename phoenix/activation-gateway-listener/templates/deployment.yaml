@@ -35,125 +35,23 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
               
           env:
-            # SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_NAME
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_HOST
-
-            - name: DB_USERNAME
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_USERNAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway-listener
-                  key: DB_PASSWORD
-
-            # APIS
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: API_MAIL
-
-            - name: API_AUTHENTICATION
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: API_AUTHENTICATION
-
-            - name: API_RECHARGE_AND_PLAN
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: API_RECHARGE_AND_PLAN
-
-            - name: API_FINANCIAL_TRANSACTION
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: API_FINANCIAL_TRANSACTION
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: activation-gateway-listener
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway-listener
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway-listener
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway-listener
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: activation-gateway-listener
-                  key: ENCRYPTION_IV
-                        
+                                  
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

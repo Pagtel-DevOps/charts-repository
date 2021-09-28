@@ -46,20 +46,14 @@ service:
   port: 3000
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
   hosts: []
   tls: []
 
-configs:
-  - name: NODE_ENV
-    refName: datora-site-api
-
-  - name: API_BASE_URL
-    refName: datora-site-api
-
-secrets: {}
+configs: []
+secrets: []
 
 readinessCheck:
   enabled: false

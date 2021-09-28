@@ -46,24 +46,19 @@ service:
   port: 3000
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: homologation.pagtel.com.br
-      paths:
-        - path: /phoenix/v1/activations
-          pathType: Prefix
-
-        - path: /phoenix/v1/area-codes
-          pathType: Prefix
+  annotations: {}
+  hosts: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+
+configs: []
+secrets: []
+
+readinessCheck:
+  enabled: false
+  path: /health
+  port: http
 
 resources:
   {}

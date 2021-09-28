@@ -40,185 +40,28 @@ spec:
               protocol: TCP
 
           env:
-            # SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: manager-api
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DATABASE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: DATABASE_PORT
-
-            - name: DATABASE_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: DATABASE_DIALECT
-
-            - name: DATABASE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: DATABASE_NAME
-
-            - name: DATABASE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: DATABASE_HOST
-
-            - name: DATABASE_USER
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: manager-api
-                  key: DATABASE_USER
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: DATABASE_PASSWORD
-
-             # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: RABBIT_PASSWORD
-
-            # MONGO
-            - name: MONGO_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: MONGO_HOST
-
-            - name: MONGO_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: MONGO_PORT
-         
-            - name: MONGO_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: MONGO_NAME
-
-            - name: MONGO_USER
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: MONGO_USER
-
-            - name: MONGO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: MONGO_PASSWORD
-
-            # APIS
-            - name: PHOENIX_RECHARGE
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PHOENIX_RECHARGE
-
-            - name: ACCOUNT_MANAGER
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: ACCOUNT_MANAGER
-
-            - name: PHOENIX_ACTIVATION
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PHOENIX_ACTIVATION
-
-            - name: PHOENIX_PORTABILITY
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PHOENIX_PORTABILITY
-
-            - name: PHOENIX_AUTHENTICATOR
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PHOENIX_AUTHENTICATOR
-
-            - name: PHOENIX_SMS
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: PHOENIX_SMS
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: manager-api
-                  key: ENCRYPTION_IV
-
-            # LINK
-            - name: BASE_FILES
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: BASE_FILES
-
-            - name: CART_LINK
-              valueFrom:
-                configMapKeyRef:
-                  name: manager-api
-                  key: CART_LINK
-                  
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /manager/v1/health
-              port: http
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

@@ -1,1 +1,0 @@
-RabbitMQ has deployed with success!!!

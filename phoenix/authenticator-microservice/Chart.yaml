@@ -3,4 +3,4 @@ name: authenticator-microservice
 description: Helm chart for authenticator microservice
 type: application
 version: 4.0.0
-appVersion: "0.0.0"
+appVersion: ""

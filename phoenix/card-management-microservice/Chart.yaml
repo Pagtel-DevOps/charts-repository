@@ -3,4 +3,4 @@ name: card-management-microservice
 description: Helm chart for Card management microservice
 type: application
 version: 4.0.0
-appVersion: "0.0.0"
+appVersion: ""

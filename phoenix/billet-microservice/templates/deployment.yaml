@@ -37,119 +37,30 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+              
           env:
-            # SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: billet-microservice
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: PORT
-
-            # DATABASE
-            - name: DATABASE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: DATABASE_PORT
-
-            - name: DATABASE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: DATABASE_HOST
-
-            - name: DATABASE_USER
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: billet-microservice
-                  key: DATABASE_USER
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: DATABASE_PASSWORD
-
-            # MONGO
-            - name: MONGO_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: MONGO_HOST
-
-            - name: MONGO_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: MONGO_PORT
-         
-            - name: MONGO_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: MONGO_NAME
-
-            - name: MONGO_USER
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: MONGO_USER
-
-            - name: MONGO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: MONGO_PASSWORD
-
-            # APIS
-            - name: URL_CREATE_CLIENT_WIRECARD
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: URL_CREATE_CLIENT_WIRECARD
-
-            - name: URL_CREATE_ORDER_WIRECARD
-              valueFrom:
-                configMapKeyRef:
-                  name: billet-microservice
-                  key: URL_CREATE_ORDER_WIRECARD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: ENCRYPTION_IV
-
-            # AUTH
-            - name: WIRECARD_ACCESS_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: WIRECARD_ACCESS_TOKEN
-
-            - name: WIRECARD_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: billet-microservice
-                  key: WIRECARD_ACCESS_KEY
-
-          # readinessProbe:
-          #   httpGet:
-          #     path: /phoenix/v1/health
-          #     port: http
+          {{- if .Values.readinessCheck.enabled -}}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

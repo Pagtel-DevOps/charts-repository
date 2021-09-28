@@ -2,5 +2,5 @@ apiVersion: v2
 name: datora-consumption-microservice
 description: Helm chart for consumption microservice
 type: application
-version: 3.0.0
-appVersion: "development"
+version: 4.0.0
+appVersion: ""

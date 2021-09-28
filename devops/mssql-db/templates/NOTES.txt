@@ -1,2 +1,0 @@
-SQL Server has deployed with success!!!
-Server NodePort: {{ .Values.service.nodePort }}

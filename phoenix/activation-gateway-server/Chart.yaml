@@ -3,4 +3,4 @@ name: activation-gateway-server
 description: Helm chart for activation gateway
 type: application
 version: 4.0.0
-appVersion: "0.0.0"
+appVersion: ""

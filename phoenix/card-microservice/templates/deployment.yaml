@@ -37,88 +37,30 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          env:
-            # SERVER
-            - name: NODE_ENV
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: NODE_ENV
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: BASE_URI
-
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: PORT
-            
-            # DATABASE
-            - name: DATABASE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: DATABASE_PORT
-
-            - name: DATABASE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: DATABASE_HOST
-
-            - name: DATABASE_USER
-              valueFrom:
-                secretKeyRef:
-                  name: card-microservice
-                  key: DATABASE_USER
-
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: card-microservice
-                  key: DATABASE_PASSWORD
-
-            # APIS
-            - name: URL_CREATE_CLIENT_WIRECARD
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: URL_CREATE_CLIENT_WIRECARD
-
-            - name: URL_CREATE_ORDER_WIRECARD
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: URL_CREATE_ORDER_WIRECARD
-
-            - name: URL_AUTHORIZED_WIRECARD
-              valueFrom:
-                configMapKeyRef:
-                  name: card-microservice
-                  key: URL_AUTHORIZED_WIRECARD
-                  
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: card-microservice
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: card-microservice
-                  key: ENCRYPTION_IV
-
-          # readinessProbe:
-          #   httpGet:
-          #     path: /phoenix/v1/health
-          #     port: http
               
+          env:
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
+
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
+
+          {{- if .Values.readinessCheck.enabled -}}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}              
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

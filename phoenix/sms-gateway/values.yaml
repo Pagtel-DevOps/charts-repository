@@ -8,7 +8,7 @@ image:
   repository: registry.gitlab.com/phoenix-pagtel/gateway-sms
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "development"
+  tag: ""
 
 imagePullSecrets:
   - name: gl-cr-auth
@@ -49,19 +49,17 @@ service:
 ingress:
   enabled: false
   className: ""
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: api.development.pagtel.com
-      paths:
-        - path: /phoenix/v1/sms
-          pathType: Prefix
+  annotations: {}
+  hosts: []
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+
+configs: []
+secrets: []
+
+readinessCheck:
+  enabled: false
+  path: /health
+  port: http
 
 resources:
   {}

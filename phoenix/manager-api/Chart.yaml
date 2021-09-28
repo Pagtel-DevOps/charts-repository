@@ -3,4 +3,4 @@ name: manager-api
 description: Helm chart for manager api
 type: application
 version: 4.0.0
-appVersion: "0.0.0"
+appVersion: ""

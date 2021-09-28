@@ -38,130 +38,30 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          env:
-            #SERVER
-            - name: NODE_ENV
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: NODE_ENV
-
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: PORT
-
-            #BROKER
-            - name: BROKER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: BROKER_URL
-
-            - name: BROKER_URL_SEND_SMS
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: BROKER_URL_SEND_SMS
-
-            - name: ACC_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: ACC_ID
-
-            - name: SHORT_CODE
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: SHORT_CODE
-
-            - name: PAGTEL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: PAGTEL_USERNAME
-
-            - name: PAGTEL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: PAGTEL_PASSWORD
-
-            # MONGO
-            - name: MONGO_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: MONGO_HOST
-
-            - name: MONGO_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: MONGO_PORT
               
-            - name: MONGO_NAME
+          env:
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: MONGO_NAME
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: MONGO_USER
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: datora-sms-microservice
-                  key: MONGO_USER
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: MONGO_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: MONGO_PASSWORD
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: datora-sms-microservice
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: datora-sms-microservice
-                  key: ENCRYPTION_IV
-
+          {{- if .Values.readinessCheck.enabled -}}
           readinessProbe:
             httpGet:
-              path: /health
-              port: http
+              path: {{ .Values.readinessCheck.path | quote }}
+              port: {{ .Values.readinessCheck.port | quote }}
+          {{- end }}
               
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

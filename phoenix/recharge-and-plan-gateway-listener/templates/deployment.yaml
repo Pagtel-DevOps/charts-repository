@@ -35,150 +35,21 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
  
           env:
-            #SERVER
-            - name: NODE_ENV
+            {{- range .Values.configs }}
+            - name: {{ .name | quote }}
               valueFrom:
                 configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: NODE_ENV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: PORT
-
-            - name: BASE_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: BASE_URI
-            
-            # DATABASE
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_PORT
-
-            - name: DB_DIALECT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_DIALECT
-
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_NAME
-
-            - name: DB_RECHARGE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_RECHARGE_NAME
-            
-            - name: DB_PAYMENT_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_PAYMENT_NAME
-
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_HOST
-
-            - name: DB_USERNAME
+            {{- range .Values.secrets }}
+            - name: {{ .name | quote }}
               valueFrom:
                 secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_USERNAME
-
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: DB_PASSWORD
-
-            #APIS
-            - name: API_MAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: API_MAIL
-
-            - name: API_FINANCIAL_TRANSACTION
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: API_FINANCIAL_TRANSACTION
-
-            - name: API_CARD_MANAGEMENT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: API_CARD_MANAGEMENT
-
-            - name: API_AUTHENTICATION
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: API_AUTHENTICATION
-
-
-            # RABBIT
-            - name: RABBIT_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: RABBIT_HOST
-
-            - name: RABBIT_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: RABBIT_PORT
-
-            - name: RABBIT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: RABBIT_USER
-
-            - name: RABBIT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: RABBIT_PASSWORD
-
-            # TOKEN
-            - name: ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: ENCRYPTION_KEY
-
-            - name: ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: ENCRYPTION_IV
-
-            # PAYLOAD
-            - name: PAYLOAD_ENCRYPTION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: PAYLOAD_ENCRYPTION_KEY
-
-            - name: PAYLOAD_ENCRYPTION_IV
-              valueFrom:
-                secretKeyRef:
-                  name: recharge-and-plan-gateway-listener
-                  key: PAYLOAD_ENCRYPTION_IV
+                  name: {{ .refName | quote }}
+                  key: {{ .name | quote }}
+            {{- end }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

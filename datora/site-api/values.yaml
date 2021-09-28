@@ -50,40 +50,8 @@ ingress:
   hosts: []
   tls: []
 
-configs:
-  - name: NODE_ENV
-    refName: datora-site-api
-
-  - name: PORT
-    refName: datora-site-api
-
-  - name: DB_TYPE
-    refName: datora-site-api
-
-  - name: DB_HOST
-    refName: datora-site-api
-
-  - name: DB_PORT
-    refName: datora-site-api
-
-  - name: DB_NAME
-    refName: datora-site-api
-
-  - name: TYPEORM_MIGRATION
-    refName: datora-site-api
-
-  - name: TYPEORM_MIGRATIONS_DIR
-    refName: datora-site-api
-
-  - name: TYPEORM_ENTITIES
-    refName: datora-site-api
-
-secrets:
-  - name: DB_USER
-    refName: datora-site-api
-
-  - name: DB_PASSWORD
-    refName: datora-site-api
+configs: []
+secrets: []
 
 readinessCheck:
   enabled: false
