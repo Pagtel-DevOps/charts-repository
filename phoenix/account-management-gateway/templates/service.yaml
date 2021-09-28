@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{- include "account-management-gateway.fullname" .  }}
+  name: {{ include "account-management-gateway.fullname" .  }}
   labels:
     {{- include "account-management-gateway.labels" . | nindent 4 }}
 spec:

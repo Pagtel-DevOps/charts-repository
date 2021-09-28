@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{- include "card-microservice.fullname" .  }}
+  name: {{ include "card-microservice.fullname" .  }}
   labels:
     {{- include "card-microservice.labels" . | nindent 4 }}
 spec:
