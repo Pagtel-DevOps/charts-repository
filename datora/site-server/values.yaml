@@ -41,7 +41,6 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: datora-site-server
   type: NodePort
   port: 3000
 

@@ -37,7 +37,6 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: datorarechargemicroservice
   type: NodePort
   port: 3000
 

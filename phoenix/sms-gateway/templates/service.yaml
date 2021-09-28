@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }}
+  name: {{- include "sms-gateway.fullname" .  }}
   labels:
-    {{- include "portability-gateway.labels" . | nindent 4 }}
+    {{- include "sms-gateway.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
+      nodePort: {{ .Values.service.nodePort}}
       protocol: TCP
       
   selector:
-    {{- include "portability-gateway.selectorLabels" . | nindent 4 }}
+    {{- include "sms-gateway.selectorLabels" . | nindent 4 }}

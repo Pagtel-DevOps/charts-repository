@@ -41,7 +41,6 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: smsgateway
   type: NodePort
   port: 3000
   nodePort: 30000

@@ -37,7 +37,6 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: datorasmsmicroservice
   type: NodePort
   port: 3000
 

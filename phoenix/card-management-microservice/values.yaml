@@ -41,7 +41,6 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: cardmanagementms
   type: NodePort
   port: 3000
 
