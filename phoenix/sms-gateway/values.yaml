@@ -55,8 +55,11 @@ ingress:
 configs: []
 secrets: []
 
-readinessCheck: {}
-livenessCheck: {}
+check:
+  readiness:
+    enabled: false
+    path: /
+    port: http
 
 resources:
   {}
