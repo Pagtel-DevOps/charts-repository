@@ -57,12 +57,7 @@ spec:
             {{- end }}
 
 
-          {{- if .Values.check.readiness.enabled }}
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.check.readiness.path }}
-              port: {{ .Values.check.readiness.port }}
-          {{- end }}
+          
 
           
           resources:
