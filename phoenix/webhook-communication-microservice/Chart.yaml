@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webhook-communication-microservice
+description: Helm chart for webhook communication microservice
+type: application
+version: 4.0.0
+appVersion: ""
