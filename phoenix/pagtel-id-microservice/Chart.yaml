@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pagtel-id-microservice
+description: Helm chart for Pagtel Id microservice
+type: application
+version: 4.0.0
+appVersion: ""
