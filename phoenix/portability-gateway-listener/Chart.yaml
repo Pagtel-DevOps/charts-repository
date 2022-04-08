@@ -1,5 +1,5 @@
 apiVersion: v2
-name: portability-gateway
+name: portability-gateway-listener
 description: Helm chart for portability gateway
 type: application
 version: 4.0.0
