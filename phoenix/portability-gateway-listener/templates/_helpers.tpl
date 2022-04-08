@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "portability-gateway.name" -}}
+{{- define "portability-gateway-listener.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "portability-gateway.fullname" -}}
+{{- define "portability-gateway-listener.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "portability-gateway.chart" -}}
+{{- define "portability-gateway-listener.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "portability-gateway.labels" -}}
-helm.sh/chart: {{ include "portability-gateway.chart" . }}
-{{ include "portability-gateway.selectorLabels" . }}
+{{- define "portability-gateway-listener.labels" -}}
+helm.sh/chart: {{ include "portability-gateway-listener.chart" . }}
+{{ include "portability-gateway-listener.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "portability-gateway.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "portability-gateway.name" . }}
+{{- define "portability-gateway-listener.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "portability-gateway-listener.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "portability-gateway.serviceAccountName" -}}
+{{- define "portability-gateway-listener.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "portability-gateway.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "portability-gateway-listener.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

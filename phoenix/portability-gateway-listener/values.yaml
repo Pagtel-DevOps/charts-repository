@@ -17,8 +17,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "portabilitygateway"
-fullnameOverride: "portabilitygateway"
+nameOverride: "portabilitygatewaylistener"
+fullnameOverride: "portabilitygatewaylistener"
 
 serviceAccount:
   # Specifies whether a service account should be created
