@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "communication-gateway.fullname" . }}
+  name: {{ include "communication-gateway-listener.fullname" . }}
   labels:
-    {{- include "communication-gateway.labels" . | nindent 4 }}
+    {{- include "communication-gateway-listener.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "communication-gateway.fullname" . }}
+    name: {{ include "communication-gateway-listener.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

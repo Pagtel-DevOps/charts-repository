@@ -1,5 +1,5 @@
 apiVersion: v2
-name: communication-gateway
+name: communication-gateway-server
 description: Helm chart for communication gateway
 type: application
 version: 4.0.0
