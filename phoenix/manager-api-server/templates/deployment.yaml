@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "manager-api.fullname" . }}
+  name: {{ include "manager-api-server.fullname" . }}
   labels:
-    {{- include "manager-api.labels" . | nindent 4 }}
+    {{- include "manager-api-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "manager-api.selectorLabels" . | nindent 6 }}
+      {{- include "manager-api-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "manager-api.selectorLabels" . | nindent 8 }}
+        {{- include "manager-api-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "manager-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "manager-api-server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
