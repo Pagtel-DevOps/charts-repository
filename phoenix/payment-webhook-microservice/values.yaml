@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "webhookbilletms"
-fullnameOverride: "webhookbilletms"
+nameOverride: "paymentwebhookms"
+fullnameOverride: "paymentwebhookms"
 
 serviceAccount:
   # Specifies whether a service account should be created
