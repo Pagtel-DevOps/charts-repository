@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { include "payment-webhook-microservice.fullname" . } }
-  labels: { { - include "payment-webhook-microservice.labels" . | nindent 4 } }
+  name: {{ include "payment-webhook-microservice.fullname" .  }}
+  labels:
+    {{- include "payment-webhook-microservice.labels" . | nindent 4 }}
 spec:
-  type: { { .Values.service.type } }
+  type: {{ .Values.service.type }}
   ports:
-    - port: { { .Values.service.port } }
-      targetPort: { { .Values.service.port } }
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
-
+      
   selector:
-    {
-      { - include "payment-webhook-microservice.selectorLabels" . | nindent 4 },
-    }
+    {{- include "payment-webhook-microservice.selectorLabels" . | nindent 4 }}
