@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-webhook-billet
+  repository: registry.gitlab.com/phoenix-pagtel/microservice-payment-webhook
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
