@@ -1,5 +1,5 @@
 apiVersion: v2
-name: Microservice-Cron
+name: microservice-cron
 description: Helm chart for Microservice - Cron
 type: application
 version: 1.0.0
