@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "microservice-cron"
-fullnameOverride: "microservice-cron"
+nameOverride: "microservicecron"
+fullnameOverride: "microservicecron"
 
 serviceAccount:
   # Specifies whether a service account should be created
