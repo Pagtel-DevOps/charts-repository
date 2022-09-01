@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "microservicecron"
-fullnameOverride: "microservicecron"
+nameOverride: "microservice-cron"
+fullnameOverride: "microservice-cron"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: microservicecron
+  name: microservice-cron
   type: NodePort
   port: 3000
 
