@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-cron
+  repository: registry.gitlab.com/phoenix-pagtel/microservice-cron/api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "microservice-cron"
-fullnameOverride: "microservice-cron"
+nameOverride: "microservicecron"
+fullnameOverride: "microservicecron"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,7 +41,7 @@ securityContext:
   # runAsUser: 1000
 
 service:
-  name: microservice-cron
+  name: microservicecron
   type: NodePort
   port: 3000
 
