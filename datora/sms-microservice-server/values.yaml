@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-mailer/v3
+  repository: registry.gitlab.com/datora/microservice-sms
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "mailermicroserviceconsumer"
-fullnameOverride: "mailermicroserviceconsumer"
+nameOverride: "datorasmsmicroserviceserver"
+fullnameOverride: "datorasmsmicroserviceserver"
 
 serviceAccount:
   # Specifies whether a service account should be created
