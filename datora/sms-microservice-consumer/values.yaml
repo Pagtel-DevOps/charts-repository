@@ -1,7 +1,11 @@
+# Default values for autenticador.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/datora/microservice-sms
+  repository: registry.gitlab.com/phoenix-pagtel/microservice-mailer/v3
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -9,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "datorasmsmicroservice"
-fullnameOverride: "datorasmsmicroservice"
+nameOverride: "mailermicroserviceconsumer"
+fullnameOverride: "mailermicroserviceconsumer"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -36,25 +40,8 @@ securityContext:
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: NodePort
-  port: 3000
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts: []
-  tls: []
-
 configs: []
 secrets: []
-
-check:
-  readiness:
-    enabled: false
-    path: /
-    port: http
 
 resources:
   {}
