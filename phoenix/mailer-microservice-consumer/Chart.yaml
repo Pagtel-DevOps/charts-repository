@@ -1,6 +1,6 @@
 apiVersion: v2
 name: mailer-microservice-consumer
-description: Helm chart for recharge and plan gateway
+description: Helm chart for mailer microservice consumer
 type: application
 version: 4.0.0
 appVersion: ""
