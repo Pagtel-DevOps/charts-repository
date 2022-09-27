@@ -1,5 +1,5 @@
 apiVersion: v2
-name: webhook-billet-microservice
+name: payment-webhook-microservice
 description: Helm chart for webhook billet microservice
 type: application
 version: 4.0.0

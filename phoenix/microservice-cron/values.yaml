@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-webhook-billet
+  repository: registry.gitlab.com/phoenix-pagtel/microservice-cron
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "webhookbilletms"
-fullnameOverride: "webhookbilletms"
+nameOverride: "microservice-cron"
+fullnameOverride: "microservice-cron"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,8 +41,9 @@ securityContext:
   # runAsUser: 1000
 
 service:
+  name: microservicecron
   type: NodePort
-  port: 80
+  port: 30200
 
 ingress:
   enabled: false
@@ -58,7 +59,7 @@ check:
   readiness:
     enabled: false
     path: /
-    port: http
+    port: 80
 
 resources:
   {}

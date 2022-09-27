@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "webhook-billet-microservice.fullname" . }}
+  name: {{ include "microservice-cron.fullname" . }}
   labels:
-    {{- include "webhook-billet-microservice.labels" . | nindent 4 }}
+    {{- include "microservice-cron.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "webhook-billet-microservice.fullname" . }}
+    name: {{ include "microservice-cron.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
