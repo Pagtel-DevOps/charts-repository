@@ -1,1 +1,1 @@
-Recharge and Plan gateway listener has deployed with success!!!
+Recharge and Plan gateway server has deployed with success!!!
