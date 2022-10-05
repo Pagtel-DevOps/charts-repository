@@ -1,0 +1,1 @@
+Authenticator microservice has deployed with success!!!

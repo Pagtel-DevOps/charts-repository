@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: registry.gitlab.com/phoenix-pagtel/microservice-cron
+  repository: registry.gitlab.com/datora/microservice-sms
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -13,8 +13,8 @@ image:
 imagePullSecrets:
   - name: gl-cr-auth
 
-nameOverride: "microservice-cron"
-fullnameOverride: "microservice-cron"
+nameOverride: "datorasmsmicroserviceconsumer"
+fullnameOverride: "datorasmsmicroserviceconsumer"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -40,26 +40,8 @@ securityContext:
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  name: microservicecron
-  type: NodePort
-  port: 30200
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts: []
-  tls: []
-
 configs: []
 secrets: []
-
-check:
-  readiness:
-    enabled: false
-    path: /
-    port: 80
 
 resources:
   {}

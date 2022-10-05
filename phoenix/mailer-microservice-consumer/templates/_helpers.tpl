@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "datora-sms-microservice.name" -}}
+{{- define "mailer-microservice-consumer.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "datora-sms-microservice.fullname" -}}
+{{- define "mailer-microservice-consumer.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "datora-sms-microservice.chart" -}}
+{{- define "mailer-microservice-consumer.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "datora-sms-microservice.labels" -}}
-helm.sh/chart: {{ include "datora-sms-microservice.chart" . }}
-{{ include "datora-sms-microservice.selectorLabels" . }}
+{{- define "mailer-microservice-consumer.labels" -}}
+helm.sh/chart: {{ include "mailer-microservice-consumer.chart" . }}
+{{ include "mailer-microservice-consumer.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "datora-sms-microservice.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "datora-sms-microservice.name" . }}
+{{- define "mailer-microservice-consumer.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "mailer-microservice-consumer.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "datora-sms-microservice.serviceAccountName" -}}
+{{- define "mailer-microservice-consumer.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "datora-sms-microservice.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "mailer-microservice-consumer.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
