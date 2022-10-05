@@ -55,12 +55,13 @@ spec:
                   key: {{ .name | quote }}
             {{- end }}
 
-
-
-          
-
- 
-              
+            {{- if .Values.check.readiness.enabled }}
+             livenessProbe:
+              httpGet:
+                path: {{ .Values.check.readiness.path }}
+                port: {{ .Values.check.readiness.port }}
+            {{- end }} 
+                         
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
