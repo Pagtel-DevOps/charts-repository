@@ -9,20 +9,24 @@ lint:
   script:
     - helm lint phoenix/*
     - helm lint datora/*
+    - helm lint default/*
 
 pages:
   stage: deploy
   script:
     - mkdir -p ./public/phoenix
     - mkdir -p ./public/datora
+    - mkdir -p ./public/default
 
     - "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
 
     - helm package phoenix/* --destination ./public/phoenix
     - helm package datora/* --destination ./public/datora
+    - helm package datora/* --destination ./public/default
 
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/phoenix ./public/phoenix
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/datora ./public/datora
+    - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/default ./public/default
   artifacts:
     paths:
       - public
