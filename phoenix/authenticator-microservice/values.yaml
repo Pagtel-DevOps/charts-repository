@@ -60,6 +60,22 @@ check:
     path: /
     port: http
 
+livinessprobe:
+ failurethreshold: 3
+ initialDelaySeconds:15
+ periodSeconds: 3
+ successThreshold: 1
+ timoutSeconds:1
+ port: 80
+
+readinessProbe:
+ failurethreshold: 3 
+ initialDelaySeconds:15
+ periodSeconds: 5
+ successThreshold: 1
+ timoutSeconds:1
+ port: 80	
+
 resources:
   {}
   # We usually recommend not to specify default resources and to leave this as a conscious
