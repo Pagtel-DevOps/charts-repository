@@ -22,7 +22,7 @@ pages:
 
     - helm package phoenix/* --destination ./public/phoenix
     - helm package datora/* --destination ./public/datora
-    - helm package datora/* --destination ./public/default
+    - helm package default/* --destination ./public/default
 
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/phoenix ./public/phoenix
     - helm repo index --url https://${CI_PROJECT_NAMESPACE}.gitlab.io/${CI_PROJECT_NAME}/datora ./public/datora
