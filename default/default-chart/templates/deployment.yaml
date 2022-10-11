@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "default-chart.selectorLabels" . | nindent 6 }}
-  default-chart:
+  template:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
