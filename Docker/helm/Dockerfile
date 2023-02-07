@@ -1,4 +1,4 @@
-FROM ubuntu:21.10
+FROM ubuntu:latest
 LABEL maintainer="Santos <lucas.santos@pagtel.com.br>"
 
 RUN apt-get update -yq
