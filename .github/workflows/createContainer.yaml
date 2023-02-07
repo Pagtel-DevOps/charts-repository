@@ -24,30 +24,32 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Configure Git
-      run: |
-        git config user.name "${{ secrets.DOCKERHUB_USERNAME }}"
-        git config user.mail "${{ secrets.DOCKERHUB_USERNAME }}@pagtel.com.br"
+    #- name: Configure Git
+    #  run: |
+    #    git config user.name "${{ secrets.DOCKERHUB_USERNAME }}"
+    #    git config user.mail "${{ secrets.DOCKERHUB_USERNAME }}@pagtel.com.br"
         
-    - name: install Helm
-      uses: Azure/setup-helm@v3
-      with:
-        version: latest
+    #- name: install Helm
+    #  uses: Azure/setup-helm@v3
+    #  with:
+    #    version: latest
 
     - name: custom packaging
       run: |
+        helm lint default/*
+        
         mkdir -p ./public/default  
 
         helm package default/* --destination ./public/default 
 
         helm repo index --url 
         
-    - name: Helm Chart Releaser
-      uses: helm/chart-releaser-action@v1.5.0
-      with:
-        charts_dir: charts-repository/default
-        charts_repo_url: https://github.com/Pagtel-DevOps/charts-repository/default
-      env: 
-        CR_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
+    #- name: Helm Chart Releaser
+    #  uses: helm/chart-releaser-action@v1.5.0
+    #  with:
+    #    charts_dir: charts-repository/default
+    #    charts_repo_url: https://github.com/Pagtel-DevOps/charts-repository/default
+    #  env: 
+    #    CR_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
       
         
