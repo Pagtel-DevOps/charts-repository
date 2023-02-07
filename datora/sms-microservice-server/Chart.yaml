@@ -1,6 +1,0 @@
-apiVersion: v2
-name: sms-microservice-server
-description: Helm chart for sms microservice server
-type: application
-version: 1.0.0
-appVersion: ""

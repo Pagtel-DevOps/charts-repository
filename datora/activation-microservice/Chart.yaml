@@ -1,6 +1,0 @@
-apiVersion: v2
-name: datora-activation-microservice
-description: Helm chart for account management microservice
-type: application
-version: 4.0.0
-appVersion: ""

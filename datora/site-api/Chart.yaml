@@ -1,6 +1,0 @@
-apiVersion: v2
-name: datora-site-api
-description: Helm chart for Datora site API
-type: application
-version: 4.0.0
-appVersion: ""
