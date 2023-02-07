@@ -42,7 +42,7 @@ jobs:
 
         helm package default/* --destination ./default/default-chart 
 
-        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository/tree/main/default/default-chart
+        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository/tree/main/default/default-chart ./default/default-chart
         
     #- name: Helm Chart Releaser
     #  uses: helm/chart-releaser-action@v1.5.0
@@ -51,5 +51,3 @@ jobs:
     #    charts_repo_url: https://github.com/Pagtel-DevOps/charts-repository/default
     #  env: 
     #    CR_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
-      
-        
