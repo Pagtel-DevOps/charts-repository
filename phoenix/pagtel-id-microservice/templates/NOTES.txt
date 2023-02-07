@@ -1,1 +1,0 @@
-Pagtel Id microservice has deployed with success!!!

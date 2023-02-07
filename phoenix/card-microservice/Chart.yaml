@@ -1,6 +1,0 @@
-apiVersion: v2
-name: card-microservice
-description: Helm chart for card financial transaction microservice
-type: application
-version: 4.0.0
-appVersion: ""

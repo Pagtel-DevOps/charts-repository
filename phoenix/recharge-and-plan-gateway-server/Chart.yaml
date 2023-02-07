@@ -1,6 +1,0 @@
-apiVersion: v2
-name: recharge-and-plan-gateway-server
-description: Helm chart for recharge and plan gateway
-type: application
-version: 4.0.0
-appVersion: ""

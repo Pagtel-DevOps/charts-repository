@@ -1,1 +1,0 @@
-Card management microservice has deployed with success!!!

@@ -1,6 +1,0 @@
-apiVersion: v2
-name: backoffice-api
-description: Helm chart for Backoffice api
-type: application
-version: 4.0.0
-appVersion: ""

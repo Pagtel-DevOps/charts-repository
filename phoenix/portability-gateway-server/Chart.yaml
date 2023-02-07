@@ -1,6 +1,0 @@
-apiVersion: v2
-name: portability-gateway-server
-description: Helm chart for portability gateway
-type: application
-version: 4.0.0
-appVersion: ""
