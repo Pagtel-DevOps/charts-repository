@@ -21,10 +21,10 @@ jobs:
       run: |
         helm lint default/*
         
-        mkdir -p ./default/default-chart  
+        mkdir -p ./default-chart  
 
-        helm package default/* --destination ./default/default-chart 
+        helm package default/* --destination ./default-chart 
 
-        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository ./default/default-chart
+        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository ./default-chart
         
   
