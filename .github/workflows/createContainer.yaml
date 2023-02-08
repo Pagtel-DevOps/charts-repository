@@ -12,28 +12,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    #- name: Login to Dockerhub
-    #  uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-    #  with:
-    #    registry: ${{ env.REGISTRY }}
-    #    username: ${{ secrets.DOCKERHUB_USERNAME }}
-    #    password: ${{ secrets.DOCKERHUB_TOKEN }}
-
     - name: checkout
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-        
-    #- name: Configure Git
-    #  run: |
-    #    git config user.name "${{ secrets.DOCKERHUB_USERNAME }}"
-    #    git config user.mail "${{ secrets.DOCKERHUB_USERNAME }}@pagtel.com.br"
-        
-    #- name: install Helm
-    #  uses: Azure/setup-helm@v3
-    #  with:
-    #    version: latest
-
+   
     - name: custom packaging
       run: |
         helm lint default/*
@@ -42,12 +25,6 @@ jobs:
 
         helm package default/* --destination ./default/default-chart 
 
-        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository/tree/main/default/default-chart ./default/default-chart
+        helm repo index --url https://github.com/Pagtel-DevOps/charts-repository ./default/default-chart
         
-    #- name: Helm Chart Releaser
-    #  uses: helm/chart-releaser-action@v1.5.0
-    #  with:
-    #    charts_dir: charts-repository/default
-    #    charts_repo_url: https://github.com/Pagtel-DevOps/charts-repository/default
-    #  env: 
-    #    CR_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
+  
