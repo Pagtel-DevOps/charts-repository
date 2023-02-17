@@ -1,2 +1,13 @@
-charts/
-  default-chart
+apiVersion: v1
+entries:
+  default-chart:
+  - apiVersion: v2
+    created: "2023-02-16T14:26:51.100184106Z"
+    description: Default Helm chart
+    digest: 12c3aa220394fd209f48fab926f9a1244d8d73eeef8ac23f1f45471fb5714ea6
+    name: default-chart
+    type: application
+    urls:
+    - default-chart-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-02-16T14:26:51.099090536Z"
