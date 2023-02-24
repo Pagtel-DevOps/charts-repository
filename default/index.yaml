@@ -2,13 +2,12 @@ apiVersion: v1
 entries:
   default:
   - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-02-24T12:05:03.620788818Z"
-    description: A Helm chart for Kubernetes
-    digest: 2fd0d16e946796bac75753f8ddebe56b34452f71fdd759f9a579210afbaac9d6
+    created: "2023-02-24T17:40:00.547530669Z"
+    description: Default Helm chart
+    digest: d41a4a343281acde077533e9d4d108e2810a04693e750620cd9cbd64be316d73
     name: default
     type: application
     urls:
     - default-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-24T12:05:03.619453363Z"
+generated: "2023-02-24T17:40:00.546412209Z"
