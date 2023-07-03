@@ -20,9 +20,10 @@ jobs:
     - name: custom packaging
       run: |
         helm lint default/*
-        helm lint phoenix/*
+        helm lint pagtel-phoenix/*
         
         mkdir -p ./default
+        mkdir -p ./pagtel-phoenix
         mkdir -p ./public/phoenix
         
         "echo \"User-Agent: *\nDisallow: /\" > ./public/robots.txt"
