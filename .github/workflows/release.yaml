@@ -21,7 +21,6 @@ jobs:
     - name: Run chart-releaser
       uses: helm/chart-releaser-action@v1.5.0
       with:
-        charts_dir: default
         config: cr.yaml
       env:
         CR_TOKEN: "${{ secrets.GIT_TOKEN }}"
