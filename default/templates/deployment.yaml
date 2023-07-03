@@ -52,16 +52,8 @@ spec:
                 secretKeyRef:
                   name: {{ .refName | quote }}
                   key: {{ .name | quote }}
-            {{- end }}
-    
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- end }}    
+         
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
