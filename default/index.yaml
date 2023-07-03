@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  default-chart:
+  - apiVersion: v2
+    created: "2023-07-03T18:37:01.319554884-03:00"
+    description: Default Helm chart
+    digest: 576f09b4703bddb42c1d6803d756e33297674d319ffa89fb16c089fb0d4b1094
+    name: default-chart
+    type: application
+    urls:
+    - https://pagtel-devops.github.io/charts-repository/default/default-chart-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-07-03T18:37:01.31904532-03:00"
