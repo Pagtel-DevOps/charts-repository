@@ -1,0 +1,6 @@
+apiVersion: v2
+name: default
+description: Default Helm chart
+type: application
+version: 1.0.0
+appVersion: ""
